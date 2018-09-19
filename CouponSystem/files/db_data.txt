@@ -1,0 +1,45 @@
+ALTER TABLE CUSTOMER DROP PRIMARY KEY;
+
+INSERT INTO CUSTOMER (NAME, PASSWORD)
+VALUES
+	(1,'John Day','111'),
+	(3,'Martha Halo','222'),
+	(6,'Erik Dan','333'),
+	(7,'Abraham Mozes','444'),
+	(8,'Tilda Tochter','555');
+
+ALTER TABLE CUSTOMER ADD PRIMARY KEY (ID);
+
+ALTER TABLE COMPANY DROP PRIMARY KEY;
+
+INSERT INTO COMPANY (NAME, PASSWORD, EMAIL)
+VALUES
+	('Hush Puppies','1111','hush@gmail.com'),
+	('PureFit','3333','Fitp@pure.com'),
+	('Angel','4444','angel@ang.comm'),
+	('Food Market','5555','foodmarket@gmail.com'),
+	('Food Factory','6666','foodf@walla.com');
+
+ALTER TABLE COMPANY ADD PRIMARY KEY (ID);
+
+ALTER TABLE COUPON DROP PRIMARY KEY;
+
+INSERT INTO COUPON (TITLE, START_DATE, END_DATE, AMOUNT, TYPE, MESSAGE, PRICE, IMAGE)
+VALUES
+	('Health Benefits','2023-11-04','2025-11-05',149,'HEALTH','Get special health care service',150,'medical'),
+	('Food Taste','2019-06-06','2019-12-12',298,'FOOD','A food tasting tour',199,'food plate'),
+	('Special vacation','2020-01-01','2020-12-31',498,'TRAVELLING','A vacation for buying products at 10,000 price',2000,'kosamoi'),
+	('Drinks','2018-03-02','2018-12-31',248,'RESTURANTS','4 drinks at the Kako resurant',99,'coffee'),
+	('Electrics','2017-08-08','2017-12-12',899,'ELECTRICITY','A big food proccesor at a special price',400,'foo proccesor'),
+	('Health Care','2018-01-01','2019-01-01',999,'HEALTH','A Special health care coupon',300,'doctor'),
+	('Camping fun','2020-02-02','2020-12-12',399,'CAMPING','Camping kit for all use',200,'fire'),
+	('Sport star','2019-04-04','2021-05-05',600,'SPORTS','Sport special perk',400,'fitness'),
+	('Dinning','2025-01-01','2025-09-09',300,'RESTURANTS','Speical dinning offer - all you can eat',500,'food'),
+	('Health for you','2017-02-20','2017-02-21',20,'HEALTH','Health treatment by a master',200,'bed'),
+	('Breakfast','2020-03-03','2022-03-03',1000,'RESTURANTS','Breakfast in the nature',300,'nature'),
+	('New TV','2021-03-04','2023-03-04',200,'ELECTRICITY','Get a big screen tv after big purchase',2000,'tv flat'),
+	('Sport Gear','2022-01-01','2022-12-31',450,'SPORTS','A complete sport gear kit',500,'sport kit'),
+	('Food market','2019-01-01','2019-08-08',99,'FOOD','A big food basket from the market',200,'basket'),
+	('Beauty sallon','2021-04-05','2022-05-05',349,'HEALTH','Beauty and health special care',150,'woman');
+
+ALTER TABLE COUPON ADD PRIMARY KEY (ID);
