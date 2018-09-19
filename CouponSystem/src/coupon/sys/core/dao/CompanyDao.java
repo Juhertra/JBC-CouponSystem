@@ -9,7 +9,6 @@ import coupon.sys.core.exceptions.CompanyDaodbException;
 import coupon.sys.core.exceptions.ConnectionPoolException;
 import coupon.sys.core.exceptions.CryptoHashException;
 
-// TODO: Auto-generated Javadoc
 /**
  * The interface that {@code CompanyDaoDb} implements from. it has all the
  * crucial company methods for communicating with the data base.

@@ -16,7 +16,6 @@ import coupon.sys.core.exceptions.ConnectionPoolException;
 import coupon.sys.core.exceptions.CouponDaoDbException;
 import coupon.sys.core.exceptions.CryptoHashException;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is a part of the facade pattern layer. The class which manages the
  * company user's request for using methods with company functionality after a
