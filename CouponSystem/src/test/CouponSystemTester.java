@@ -101,7 +101,7 @@ public class CouponSystemTester {
 
 		/* GET CUSTOMER */
 
-		System.out.println("Get Customer: " + adminF.getCustomerByName("Joe Dar").getId());
+		System.out.println("Get Customer: " + adminF.getCustomerByName("Joe Dar"));
 
 		/* REMOVE CUSTOMER */
 		/*
@@ -112,8 +112,9 @@ public class CouponSystemTester {
 		Customer exsistingCustomerForRemove = new Customer();
 		exsistingCustomerForRemove.setName("Joe Dar");
 		exsistingCustomerForRemove.setPassword("999");
-		exsistingCompanyForRemove.setId(adminF.getCustomerByName("Joe Dar").getId());
-
+		exsistingCustomerForRemove.setId(adminF.getCustomerByName("Joe Dar").getId());
+		System.out.println(exsistingCustomerForRemove);
+		
 		System.out.println("Remove Customer using Admin Facade");
 		adminF.removeCustomer(exsistingCustomerForRemove);
 
@@ -126,7 +127,7 @@ public class CouponSystemTester {
 		
 		System.out.println("##### COMPANY FACADE - COMPANY METHODS #####");
 
-		CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Hush Puppies", "1111",
+		CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Hush Puppies", "111",
 				ClientType.COMPANY);
 
 		/* CREATE COUPON */

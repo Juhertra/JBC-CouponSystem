@@ -323,8 +323,10 @@ public class CompanyDaoDb implements CompanyDao {
 	@Override
 	public Long login(String name, String password)
 			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException {
-		Long companyId = null;
+
+		// Get connection from ConenctionPool
 		Connection connection = connectionPool.getConnection();
+		Long companyId = null;
 		CryptoHashAlgorithms CHA = new CryptoHashAlgorithms();
 		password = CHA.hashPassword(password.getBytes(), "SHA-256");
 
@@ -336,9 +338,12 @@ public class CompanyDaoDb implements CompanyDao {
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
 				companyId = resultSet.getLong(1);
-				// if auth success, the ID returned
+				System.out.println(companyId);
+				loggedInCompanyID = companyId;
+				// if authorization is successful, the ID is returned
 
 			}
+			System.out.println("Login Successfully");
 			pstmt.close();
 		} catch (SQLException e) {
 			throw new CompanyDaodbException("Failed to login", e);

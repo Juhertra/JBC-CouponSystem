@@ -20,6 +20,6 @@ public enum CouponType {
 	SPORTS,
 	/** The camping. */
 	CAMPING,
-	/** The travelling. */
+	/** The traveling. */
 	TRAVELLING;
 }

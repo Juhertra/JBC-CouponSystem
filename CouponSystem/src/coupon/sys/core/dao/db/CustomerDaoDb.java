@@ -122,19 +122,20 @@ public class CustomerDaoDb implements CustomerDao {
 		Connection connection = connectionPool.getConnection();
 		try {
 			System.out.println("Writing to DB - Removing Customer");
-			String query = "DELETE FROM Customer WHERE ID=?"; // DELETE FROM Customer_Coupon WHERE CUSTOMER_ID=?";
+			String query = "DELETE FROM Customer WHERE ID=?"; 
+			// DELETE FROM Customer_Coupon WHERE CUSTOMER_ID=?";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 
 			// deleting from 2 tables (2 sql queries)
 			pstmt.setLong(1, customer.getId());
-		//	pstmt.setLong(2, customer.getId());
+			// pstmt.setLong(2, customer.getId());
 			pstmt.executeUpdate();
+			System.out.println("Customer removed successfully.");
 			pstmt.close();
 		} catch (SQLException e) {
 			throw new CustomerDaoDbException("Failed to remove the requested customer", e);
 		} finally {
 			connectionPool.returnConnection(connection);
-			System.out.println("Customer removed successfully.");
 		}
 
 	}
@@ -165,12 +166,12 @@ public class CustomerDaoDb implements CustomerDao {
 			pstmt.setString(2, customer.getPassword());
 			pstmt.setLong(3, customer.getId());
 			pstmt.executeUpdate();
+			System.out.println("Customer updated successfully.");
 			pstmt.close();
 		} catch (SQLException e) {
 			throw new CustomerDaoDbException("Failed to update the requested customer", e);
 		} finally {
 			connectionPool.returnConnection(connection);
-			System.out.println("Customer updated successfully.");
 		}
 
 	}
@@ -251,14 +252,13 @@ public class CustomerDaoDb implements CustomerDao {
 				customer.setPassword(resultSet.getString("PASSWORD"));
 				allCustomers.add(customer);
 			}
-			System.out.println(customer);
+			System.out.println("All customers presented successfully");
 			pstmt.close();
 		} catch (SQLException e) {
 			throw new CustomerDaoDbException("Failed to get all customers", e);
 		} finally {
 
 			connectionPool.returnConnection(connection);
-			System.out.println("All customers presented successfully");
 		}
 		return allCustomers;
 	}
@@ -352,8 +352,9 @@ public class CustomerDaoDb implements CustomerDao {
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
 
-				// if authorization is successful, the ID is returned
 				customerId = resultSet.getLong(1);
+				loggedInCustomerID = customerId;
+				// if authorization is successful, the ID is returned
 			}
 			pstmt.close();
 		} catch (SQLException e) {

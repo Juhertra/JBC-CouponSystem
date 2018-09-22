@@ -54,13 +54,13 @@ public class Test extends Thread {
 			// AF.removeCompany(comp1);
 			// AF.createCompany(comp1);
 			//
-			// cust1.setName("Mario");
-			// cust1.setPassword("5555");
-			// cust1.setId(CustDAO.getCustomerId(cust1.getName()));
-			// //cust1.setCoupons(CustDAO.getCoupons(cust1));
-			// AF.removeCustomer(cust1);
-			// AF.createCustomer(cust1);
-			// System.out.println(CompDAO.getCoupons(CompDAO.getCompanyId(comp1.getName())));
+			 cust1.setName("Mario");
+			 cust1.setPassword("5555");
+//			 cust1.setId(CustDAO.getCustomerId(cust1.getName()));
+			 //cust1.setCoupons(CustDAO.getCoupons(cust1));
+//			 AF.removeCustomer(cust1);
+			 AF.createCustomer(cust1);
+			 System.out.println(CompDAO.getCoupons(CompDAO.getCompanyId(comp1.getName())));
 			//
 			// c1.setAmount(4);
 			// c1.setCompanyId(CompDAO.getCompanyId("Celcom"));
