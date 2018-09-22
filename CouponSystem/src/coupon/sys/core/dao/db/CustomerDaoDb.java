@@ -30,6 +30,8 @@ public class CustomerDaoDb implements CustomerDao {
 
 	/** The connection pool. */
 	private ConnectionPool connectionPool;
+	/** The logged in customer ID. */
+	protected static long loggedInCustomerID = 0;
 
 	/**
 	 * Constructs the class that communicates with the db and initializes the pool
@@ -120,12 +122,12 @@ public class CustomerDaoDb implements CustomerDao {
 		Connection connection = connectionPool.getConnection();
 		try {
 			System.out.println("Writing to DB - Removing Customer");
-			String query = "DELETE FROM Customer WHERE ID=?; DELETE FROM Customer_Coupon WHERE CUSTOMER_ID=?";
+			String query = "DELETE FROM Customer WHERE ID=?"; // DELETE FROM Customer_Coupon WHERE CUSTOMER_ID=?";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 
 			// deleting from 2 tables (2 sql queries)
 			pstmt.setLong(1, customer.getId());
-			pstmt.setLong(2, customer.getId());
+		//	pstmt.setLong(2, customer.getId());
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {

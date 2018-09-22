@@ -30,6 +30,8 @@ public class CompanyDaoDb implements CompanyDao {
 
 	/** The connection pool. */
 	private ConnectionPool connectionPool;
+	/** The logged in company ID. */
+	protected static long loggedInCompanyID = 0;
 
 	/**
 	 * Constructs the class that communicates with the db and initializes the pool
@@ -123,16 +125,16 @@ public class CompanyDaoDb implements CompanyDao {
 		Connection connection = connectionPool.getConnection();
 		try {
 			System.out.println("Writing to DB - Removing Company");
-			String query = "DELETE FROM Company WHERE ID =?; DELETE FROM Company_Coupon WHERE ID =?";
+			String query = "DELETE FROM Company WHERE ID =?"; // DELETE FROM Company_Coupon WHERE ID =?";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setLong(1, company.getId());
 			pstmt.executeUpdate();
+			System.out.println("Company removed succesfully");
 			pstmt.close();
 		} catch (SQLException e) {
 			throw new CompanyDaodbException("Failed to remove the requested company", e);
 		} finally {
 			connectionPool.returnConnection(connection);
-			System.out.println("Company removed succesfully");
 		}
 
 	}
