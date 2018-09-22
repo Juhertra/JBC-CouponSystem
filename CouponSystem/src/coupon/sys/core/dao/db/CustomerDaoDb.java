@@ -122,7 +122,7 @@ public class CustomerDaoDb implements CustomerDao {
 		Connection connection = connectionPool.getConnection();
 		try {
 			System.out.println("Writing to DB - Removing Customer");
-			String query = "DELETE FROM Customer WHERE ID=?"; 
+			String query = "DELETE FROM Customer WHERE ID=?";
 			// DELETE FROM Customer_Coupon WHERE CUSTOMER_ID=?";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 
@@ -284,7 +284,8 @@ public class CustomerDaoDb implements CustomerDao {
 		Connection connection = connectionPool.getConnection();
 
 		try {
-			String query = "SELECT Coupon.* FROM Coupon WHERE Customer_Coupon.CUSTOMER_ID = ?";
+			String query = "SELECT * FROM COUPON WHERE ID IN "
+					+ "(SELECT CUSTOMER_COUPON.COUPON_ID FROM CUSTOMER_COUPON WHERE CUSTOMER_COUPON.CUSTOMER_ID=?)";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setLong(1, customer.getId());
 			ResultSet resultSet = pstmt.executeQuery();
@@ -300,7 +301,6 @@ public class CustomerDaoDb implements CustomerDao {
 				coupon.setMessage(resultSet.getString("MESSAGE"));
 				coupon.setPrice(resultSet.getDouble("PRICE"));
 				coupon.setImage(resultSet.getString("IMAGE"));
-				coupon.setCompanyId(resultSet.getLong("COMPANY_ID"));
 
 				// add to list
 				getCoupons.add(coupon);

@@ -208,7 +208,7 @@ public class CouponDaoDb implements CouponDao {
 		Coupon coupon = new Coupon();
 		Connection connection = connectionPool.getConnection();
 		try {
-			String query = "SELECT ID FROM Coupon WHERE ID=?";
+			String query = "SELECT * FROM Coupon WHERE ID=?";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setLong(1, id);
 			ResultSet resultSet = pstmt.executeQuery();
