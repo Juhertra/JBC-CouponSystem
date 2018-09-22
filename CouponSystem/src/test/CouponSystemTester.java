@@ -184,7 +184,7 @@ public class CouponSystemTester {
 		/* GET COUPON BY DATE */
 
 		System.out.println("Get Coupons by date");
-		printItem(companyFacade.getAllCouponsByMaxDate("2027-07-07"));
+		printItem(companyFacade.getAllCouponsByMaxDate("2021-07-07"));
 
 		/* CUSTOMER FACADE - CUSTOMER METHODS */
 		
@@ -196,7 +196,7 @@ public class CouponSystemTester {
 		/* PURCHASE COUPON */
 
 		System.out.println("Purchuse coupon");
-		customerFacade.purchaseCoupon(companyFacade.getCoupon(coupon.getId()));
+		customerFacade.purchaseCoupon(companyFacade.getCoupon(17));
 
 		/* GET ALL PURCHASED COUPONS */
 
