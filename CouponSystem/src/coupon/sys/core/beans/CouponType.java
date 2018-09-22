@@ -21,5 +21,5 @@ public enum CouponType {
 	/** The camping. */
 	CAMPING,
 	/** The traveling. */
-	TRAVELLING;
+	TRAVELING;
 }
