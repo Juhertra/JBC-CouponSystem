@@ -344,7 +344,7 @@ public class CouponDaoDb implements CouponDao {
 		List<Coupon> oldCoupons = new ArrayList<Coupon>();
 		Connection connection = connectionPool.getConnection();
 		try {
-			String query = "SELECT ID FROM Coupons WHERE DATE(NOW())>END_DATE";
+			String query = "SELECT ID FROM Coupon WHERE CURRENT_DATE>END_DATE";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 			Coupon coupon = null;
