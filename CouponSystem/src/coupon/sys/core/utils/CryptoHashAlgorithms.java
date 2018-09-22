@@ -7,23 +7,25 @@ import javax.xml.bind.DatatypeConverter;
 
 import coupon.sys.core.exceptions.CryptoHashException;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CryptoHashAlgorithms.
  */
 public class CryptoHashAlgorithms {
 
-	/**
-	 * Hash password.
-	 *
-	 * @param password the password
-	 * @param algorithm the algorithm
-	 * @return the string
-	 * @throws CryptoHashException the crypto hash exception
-	 */
 	/*
-	 * Get user input + desired hash algorithm and returns the hash equivalent string
-	 * Method works with the following hash algorithms: MD2, MD5, SHA-224, SHA-256, SHA-384, SHA-512
+	 * Hash password.
+	 * 
+	 * Get user input + desired hash algorithm and returns the hash equivalent
+	 * string Method works with the following hash algorithms: MD2, MD5, SHA-224,
+	 * SHA-256, SHA-384, SHA-512
+	 * 
+	 * @param password the password
+	 * 
+	 * @param algorithm the algorithm
+	 * 
+	 * @return the string
+	 * 
+	 * @throws CryptoHashException the crypto hash exception
 	 */
 	public String hashPassword(byte[] password, String algorithm) throws CryptoHashException {
 		String hashValue = "";

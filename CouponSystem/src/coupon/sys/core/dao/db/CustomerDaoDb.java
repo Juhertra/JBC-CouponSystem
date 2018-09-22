@@ -18,7 +18,6 @@ import coupon.sys.core.exceptions.CryptoHashException;
 import coupon.sys.core.exceptions.CustomerDaoDbException;
 import coupon.sys.core.utils.CryptoHashAlgorithms;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is a part of the DAO layer. The class which communicates between
  * the customer's object related methods and the data base through sql queries.
@@ -49,11 +48,16 @@ public class CustomerDaoDb implements CustomerDao {
 	 * Create Customer, the method checks if the company already exists if it
 	 * doesn't it crates it and if does throws exception.
 	 *
-	 * @param customer the customer
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws SQLException the SQL exception
+	 * @param customer
+	 *            the customer
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws SQLException
+	 *             the SQL exception
 	 */
 	@Override
 	public void createCustomer(Customer customer)
@@ -74,6 +78,7 @@ public class CustomerDaoDb implements CustomerDao {
 				break;
 			}
 		}
+
 		// Write customer to Customer table
 		if (custamerNameExists == false) {
 			try {
@@ -99,10 +104,14 @@ public class CustomerDaoDb implements CustomerDao {
 	 * This method removes the customer's record from the data base, using the
 	 * received customer parameter and removes the customer from joined table.
 	 *
-	 * @param customer the customer
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param customer
+	 *            the customer
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public void removeCustomer(Customer customer)
@@ -132,10 +141,14 @@ public class CustomerDaoDb implements CustomerDao {
 	 * This method updates some columns in the customer's record in the data base,
 	 * using the received customer parameter.
 	 *
-	 * @param customer the customer
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param customer
+	 *            the customer
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public void updateCustomer(Customer customer)
@@ -164,12 +177,17 @@ public class CustomerDaoDb implements CustomerDao {
 	 * This method receives the customer's record from the data base, using the
 	 * received customer's id parameter.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the customer
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	@Override
 	public Customer getCustomer(long id)
@@ -204,10 +222,14 @@ public class CustomerDaoDb implements CustomerDao {
 	 * data base.
 	 *
 	 * @return the all customers
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	@Override
 	public Collection<Customer> getAllCustomers()
@@ -243,11 +265,15 @@ public class CustomerDaoDb implements CustomerDao {
 	 * This method receives all the logged customer's coupons from the records of
 	 * the data base.
 	 *
-	 * @param customer the customer
+	 * @param customer
+	 *            the customer
 	 * @return the coupons
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public Collection<Coupon> getCoupons(Customer customer)
@@ -273,6 +299,7 @@ public class CustomerDaoDb implements CustomerDao {
 				coupon.setPrice(resultSet.getDouble("PRICE"));
 				coupon.setImage(resultSet.getString("IMAGE"));
 				coupon.setCompanyId(resultSet.getLong("COMPANY_ID"));
+
 				// add to list
 				getCoupons.add(coupon);
 			}
@@ -291,14 +318,20 @@ public class CustomerDaoDb implements CustomerDao {
 	 * The password is validated by converting the users input into system hash
 	 * encryptions used and matching the hash with the one already written on the DB
 	 *
-	 * @param name the name
-	 * @param password the password
-	 * @return customerId - Returns connection to pool
-	 * CustomerId - Returns Customer ID
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @param name
+	 *            the name
+	 * @param password
+	 *            the password
+	 * @return customerId - Returns connection to pool CustomerId - Returns Customer
+	 *         ID
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	@Override
 	public Long login(String name, String password)
@@ -316,6 +349,7 @@ public class CustomerDaoDb implements CustomerDao {
 			pstmt.setString(2, password);
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
+
 				// if authorization is successful, the ID is returned
 				customerId = resultSet.getLong(1);
 			}
@@ -331,13 +365,16 @@ public class CustomerDaoDb implements CustomerDao {
 	/**
 	 * Get customer from Customer table by ID.
 	 *
-	 * @param customerName the customer name
-	 * @return connection - Connection returns to pool
-	 * customer.getId() - Returns the customer ID of the company name
-	 *         requested
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param customerName
+	 *            the customer name
+	 * @return connection - Connection returns to pool customer.getId() - Returns
+	 *         the customer ID of the company name requested
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public long getCustomerId(String customerName)
@@ -369,11 +406,16 @@ public class CustomerDaoDb implements CustomerDao {
 	 * This method adds a coupon to a customer. Customer ID and Coupon ID are added
 	 * to customer_coupon join table
 	 *
-	 * @param coupon the coupon
-	 * @param customer the customer
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CustomerDaoDbException the customer dao db exception
+	 * @param coupon
+	 *            the coupon
+	 * @param customer
+	 *            the customer
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
 	 */
 	@Override
 	public void addCouponToCustomer(Coupon coupon, Customer customer)

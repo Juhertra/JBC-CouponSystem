@@ -88,23 +88,16 @@ public class ConnectionPool {
 	}
 
 	/**
-	 * Gets the connection.
-	 *
-	 * @return the connection
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 */
-	/*
 	 * Get connection from connection pool If closeAllConnections() method was used,
 	 * getConnection() method stops giving connections
 	 * 
-	 * @return connection
+	 * @return the connection
 	 * 
 	 * @throws ConnectionPoolException
+	 *             the connection pool exception
 	 * 
 	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	public synchronized Connection getConnection() throws ConnectionPoolException, InterruptedException {
 		if (closeConnectionPool == false) {

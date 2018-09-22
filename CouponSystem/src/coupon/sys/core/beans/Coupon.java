@@ -3,7 +3,6 @@ package coupon.sys.core.beans;
 import java.io.Serializable;
 import java.sql.Date;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is for creating the coupon object to use with the different
  * company and customer related methods.
@@ -303,11 +302,6 @@ public class Coupon implements Serializable {
 		this.companyId = companyId;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 

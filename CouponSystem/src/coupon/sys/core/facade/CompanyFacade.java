@@ -71,7 +71,6 @@ public class CompanyFacade implements CouponClientFacade {
 	 * @param companyDao
 	 *            the new company dao
 	 */
-	// set the Company DAO
 	public void setCompanyDao(CompanyDao companyDao) {
 		this.companyDao = companyDao;
 	}
@@ -82,17 +81,10 @@ public class CompanyFacade implements CouponClientFacade {
 	 * @param couponDao
 	 *            the new coupon dao
 	 */
-	// set the Coupon DAO
 	public void setCouponDao(CouponDao couponDao) {
 		this.couponDao = couponDao;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see coupon.sys.core.facade.CouponClientFacade#login(java.lang.String,
-	 * java.lang.String, coupon.sys.core.facade.ClientType)
-	 */
 	@Override
 	// not used
 	public CouponClientFacade login(String name, String password, ClientType clientType) {

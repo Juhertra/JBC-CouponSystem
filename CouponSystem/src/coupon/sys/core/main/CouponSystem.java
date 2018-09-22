@@ -23,11 +23,10 @@ import coupon.sys.core.facade.CouponClientFacade;
 import coupon.sys.core.facade.CustomerFacade;
 import coupon.sys.core.utils.DataBaseProperties;
 
-// TODO: Auto-generated Javadoc
 /**
  * This is the singleton pattern coupon system of the project, that returns the
  * right facade object if the login attempt is successful. And by that the user
- * can check or make actions in the program. Also starts the Daily timer task 
+ * can check or make actions in the program. Also starts the Daily timer task
  * thread for deleting unnecessary coupons. And is able to shut down the system.
  * 
  * @author Julio Hernan Trajtemberg
@@ -38,39 +37,40 @@ public class CouponSystem {
 
 	/** The coupon system instance. */
 	private static CouponSystem couponSystemInstance = new CouponSystem();
-	
+
 	/** The connection pool. */
 	private ConnectionPool connectionPool;
-	
+
 	/** The company dao. */
 	private CompanyDao companyDao = new CompanyDaoDb();
-	
+
 	/** The coupon dao. */
 	private CouponDao couponDao = new CouponDaoDb();
-	
+
 	/** The customer dao. */
 	private CustomerDao customerDao = new CustomerDaoDb();
-	
-	/** The timer. */
-	// scheduler for the daily cleaner thread task
+
+	/**
+	 * The timer. Scheduler for the daily cleaner thread task
+	 */
 	private Timer timer;
 
 	/**
-	 * Instantiates a new coupon system.
+	 * Instantiates a new coupon system. Private c'tor 'hides' the public default
+	 * one. CouponSystem is a singleton
 	 */
-	// private c'tor 'hides' the public default one. CouponSystem is a singleton
 	private CouponSystem() {
 		// get/create the connection pool
-			try {
-				connectionPool = ConnectionPool.getInstance();
-			} catch (ConnectionPoolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			connectionPool = ConnectionPool.getInstance();
+		} catch (ConnectionPoolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// start the daily cleaner thread
 		startTimer();
 	}
-	
+
 	/**
 	 * (singleton) - if no instance , create it only once.
 	 * 
@@ -87,7 +87,8 @@ public class CouponSystem {
 	/**
 	 * Graceful shutdown.
 	 *
-	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
 	 */
 	public void shutdown() throws ConnectionPoolException {
 		try {
@@ -99,43 +100,54 @@ public class CouponSystem {
 	}
 
 	/**
-	 * Start timer.
+	 * Start timer. Will start cleaner thread ( at c'tor , or after user stopped it
+	 * manually )
 	 */
-	// will start cleaner thread ( at c'tor , or after user stopped it manually )
 	public void startTimer() {
 		// start daily thread to clean old coupons
-		System.out.println("Thread scheduler started. interval = " + DataBaseProperties.getTheadIntervalMinutes() + " minutes.");
+		System.out.println(
+				"Thread scheduler started. interval = " + DataBaseProperties.getTheadIntervalMinutes() + " minutes.");
 		timer = new Timer();
 		// 60000 msec = 1 min
 		// minutes of timer specified in DataBaseProperties file
-		timer.scheduleAtFixedRate(new DailyCouponExpirationTask(couponDao), 30, (DataBaseProperties.getTheadIntervalMinutes() * 60000));
+		timer.scheduleAtFixedRate(new DailyCouponExpirationTask(couponDao), 30,
+				(DataBaseProperties.getTheadIntervalMinutes() * 60000));
 	}
 
 	/**
-	 * Stop timer.
+	 * Stop timer. Stop the cleaner thread
 	 */
-	// stop the cleaner thread
 	public void stopTimer() {
 		timer.cancel();
 		System.out.println("Thread stopped by user request.");
 	}
 
 	/**
-	 * Login.
+	 * Login. Global authentication method. depends on the ClientType
 	 *
-	 * @param name the name
-	 * @param password the password
-	 * @param clientType the client type
+	 * @param name
+	 *            the name
+	 * @param password
+	 *            the password
+	 * @param clientType
+	 *            the client type
 	 * @return the coupon client facade
-	 * @throws CouponSystemExceptions the coupon system exceptions
-	 * @throws CryptoHashException the crypto hash exception
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CompanyDaodbException the company daodb exception
+	 * @throws CouponSystemExceptions
+	 *             the coupon system exceptions
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
 	 */
-	// global authentication method. depends on the ClientType
-	public CouponClientFacade login(String name, String password, ClientType clientType) throws CouponSystemExceptions, CryptoHashException, CustomerDaoDbException, ConnectionPoolException, InterruptedException, CompanyDaodbException {
+	public CouponClientFacade login(String name, String password, ClientType clientType)
+			throws CouponSystemExceptions, CryptoHashException, CustomerDaoDbException, ConnectionPoolException,
+			InterruptedException, CompanyDaodbException {
 		// login of Admin
 		if (clientType == ClientType.ADMIN) {
 			if (password.equals(DataBaseProperties.getPassword()) && name.equals(DataBaseProperties.getUser())) {

@@ -18,7 +18,6 @@ import coupon.sys.core.exceptions.ConnectionPoolException;
 import coupon.sys.core.exceptions.CryptoHashException;
 import coupon.sys.core.utils.CryptoHashAlgorithms;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is a part of the DAO layer. The class which communicates between
  * the company's object related methods and the data base through sql queries.
@@ -49,11 +48,16 @@ public class CompanyDaoDb implements CompanyDao {
 	 * Create Company, the method checks if the company already exists if it doesn't
 	 * it crates it and if does throws exception.
 	 *
-	 * @param company the company
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws SQLException the SQL exception
+	 * @param company
+	 *            the company
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws SQLException
+	 *             the SQL exception
 	 */
 	@Override
 	public void createCompany(Company company)
@@ -104,10 +108,14 @@ public class CompanyDaoDb implements CompanyDao {
 	 * Remove company from Company table and from Company_Coupon table Return
 	 * connection to pool.
 	 *
-	 * @param company the company
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param company
+	 *            the company
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public void removeCompany(Company company)
@@ -133,10 +141,14 @@ public class CompanyDaoDb implements CompanyDao {
 	 * Update company password, email and name changes from Company table Return
 	 * connection to pool.
 	 *
-	 * @param company the company
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param company
+	 *            the company
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public void updateCompany(Company company)
@@ -161,11 +173,15 @@ public class CompanyDaoDb implements CompanyDao {
 	/**
 	 * Get company from Company table by ID Return connection to pool.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the company
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public Company getCompany(long id) throws CompanyDaodbException, ConnectionPoolException, InterruptedException {
@@ -195,10 +211,14 @@ public class CompanyDaoDb implements CompanyDao {
 	 * Get all companies from Company table.
 	 *
 	 * @return connection to pool
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	@Override
 	public Collection<Company> getAllCompanies()
@@ -232,11 +252,15 @@ public class CompanyDaoDb implements CompanyDao {
 	/**
 	 * Get all coupons from a Company on Coupon table.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return connection to pool
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public Collection<Coupon> getCoupons(long id)
@@ -279,14 +303,20 @@ public class CompanyDaoDb implements CompanyDao {
 	 * The password is validated by converting the users input into system hash
 	 * encryptions used and matching the hash with the one already written on the DB
 	 *
-	 * @param name the name
-	 * @param password the password
-	 * @return connection - Returns connection to pool
-	 * CompanyId - Returns Company ID
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @param name
+	 *            the name
+	 * @param password
+	 *            the password
+	 * @return connection - Returns connection to pool CompanyId - Returns Company
+	 *         ID
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	@Override
 	public Long login(String name, String password)
@@ -319,12 +349,16 @@ public class CompanyDaoDb implements CompanyDao {
 	/**
 	 * Get company from Company table by ID.
 	 *
-	 * @param companyName the company name
-	 * @return connection Connection returns to pool
-	 * company.getId() Returns the company ID of the company name requested
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param companyName
+	 *            the company name
+	 * @return connection Connection returns to pool company.getId() Returns the
+	 *         company ID of the company name requested
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public long getCompanyId(String companyName)

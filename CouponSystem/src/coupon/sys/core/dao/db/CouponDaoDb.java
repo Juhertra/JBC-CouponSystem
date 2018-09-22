@@ -15,7 +15,6 @@ import coupon.sys.core.dao.CouponDao;
 import coupon.sys.core.exceptions.ConnectionPoolException;
 import coupon.sys.core.exceptions.CouponDaoDbException;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is a part of the DAO layer. The class which communicates between
  * the coupon's object related methods and the data base through sql queries.
@@ -30,8 +29,8 @@ public class CouponDaoDb implements CouponDao {
 	private ConnectionPool connectionPool;
 
 	/**
-	 * Constructs the class that communicates with the db and initializes the
-	 * pool variable with the Connection pool's instance.
+	 * Constructs the class that communicates with the db and initializes the pool
+	 * variable with the Connection pool's instance.
 	 */
 	public CouponDaoDb() {
 
@@ -47,11 +46,16 @@ public class CouponDaoDb implements CouponDao {
 	 * This method creates the coupon's record into the data base, using the
 	 * received coupon parameter.
 	 *
-	 * @param coupon the coupon
-	 * @throws CouponDaoDbException the coupon dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws SQLException the SQL exception
+	 * @param coupon
+	 *            the coupon
+	 * @throws CouponDaoDbException
+	 *             the coupon dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws SQLException
+	 *             the SQL exception
 	 */
 	@Override
 	public void createCoupon(Coupon coupon)
@@ -89,7 +93,7 @@ public class CouponDaoDb implements CouponDao {
 				pstmt.setString(6, coupon.getMessage());
 				pstmt.setDouble(7, coupon.getPrice());
 				pstmt.setString(8, coupon.getImage());
-			//	pstmt.setLong(9, coupon.getCompanyId());
+				// pstmt.setLong(9, coupon.getCompanyId());
 				pstmt.executeUpdate();
 
 				// Get coupon ID
@@ -123,10 +127,14 @@ public class CouponDaoDb implements CouponDao {
 	 * This method removes the coupon's record from the data base, using the
 	 * received coupon parameter.
 	 *
-	 * @param coupon the coupon
-	 * @throws CouponDaoDbException the coupon dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param coupon
+	 *            the coupon
+	 * @throws CouponDaoDbException
+	 *             the coupon dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public void removeCoupon(Coupon coupon) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
@@ -151,10 +159,14 @@ public class CouponDaoDb implements CouponDao {
 	 * This method updates some columns in the coupon's record in the data base,
 	 * using the received company parameter.
 	 *
-	 * @param coupon the coupon
-	 * @throws CouponDaoDbException the coupon dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param coupon
+	 *            the coupon
+	 * @throws CouponDaoDbException
+	 *             the coupon dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public void updateCoupon(Coupon coupon) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
@@ -181,11 +193,15 @@ public class CouponDaoDb implements CouponDao {
 	 * This method receives the coupon's record from the data base, using the
 	 * received coupon's id parameter.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the coupon
-	 * @throws CouponDaoDbException the coupon dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CouponDaoDbException
+	 *             the coupon dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public Coupon getCoupon(long id) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
@@ -222,9 +238,12 @@ public class CouponDaoDb implements CouponDao {
 	 * data base.
 	 *
 	 * @return the all coupons
-	 * @throws CouponDaoDbException the coupon dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CouponDaoDbException
+	 *             the coupon dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public Collection<Coupon> getAllCoupons()
@@ -263,11 +282,15 @@ public class CouponDaoDb implements CouponDao {
 	 * This method receives all the records of coupons that are in the wished
 	 * category from all of the coupons from the data base.
 	 *
-	 * @param couponType the coupon type
+	 * @param couponType
+	 *            the coupon type
 	 * @return the coupons by type
-	 * @throws CouponDaoDbException the coupon dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CouponDaoDbException
+	 *             the coupon dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	@Override
 	public Collection<Coupon> getCouponsByType(CouponType couponType)
@@ -308,9 +331,12 @@ public class CouponDaoDb implements CouponDao {
 	 * those coupons.
 	 *
 	 * @return the old coupons
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CouponDaoDbException the coupon dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CouponDaoDbException
+	 *             the coupon dao db exception
 	 */
 	public List<Coupon> getOldCoupons() throws ConnectionPoolException, InterruptedException, CouponDaoDbException {
 

@@ -1,6 +1,5 @@
 package coupon.sys.core.facade;
 
-// TODO: Auto-generated Javadoc
 /**
  * The class is for setting the three login user options as the client types.
  * 
@@ -10,7 +9,9 @@ package coupon.sys.core.facade;
 public enum ClientType {
 
 	/** The admin. */
-	ADMIN, /** The company. */
- COMPANY, /** The customer. */
- CUSTOMER
+	ADMIN,
+	/** The company. */
+	COMPANY,
+	/** The customer. */
+	CUSTOMER
 }

@@ -1,6 +1,5 @@
 package coupon.sys.core.beans;
 
-// TODO: Auto-generated Javadoc
 /**
  * the class is for creating coupon types options for the coupon type values.
  * 
@@ -10,11 +9,17 @@ package coupon.sys.core.beans;
 public enum CouponType {
 
 	/** The restaurants. */
-	RESTAURANTS, /** The electricity. */
- ELECTRICITY, /** The food. */
- FOOD, /** The health. */
- HEALTH, /** The sports. */
- SPORTS, /** The camping. */
- CAMPING, /** The travelling. */
- TRAVELLING;
+	RESTAURANTS,
+	/** The electricity. */
+	ELECTRICITY,
+	/** The food. */
+	FOOD,
+	/** The health. */
+	HEALTH,
+	/** The sports. */
+	SPORTS,
+	/** The camping. */
+	CAMPING,
+	/** The travelling. */
+	TRAVELLING;
 }

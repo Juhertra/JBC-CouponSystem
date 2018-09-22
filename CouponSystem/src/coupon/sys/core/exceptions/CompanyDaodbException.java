@@ -1,6 +1,5 @@
 package coupon.sys.core.exceptions;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CompanyDaodbException.
  *
@@ -17,52 +16,55 @@ public class CompanyDaodbException extends Exception {
 	 */
 	public CompanyDaodbException() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * Instantiates a new company daodb exception.
 	 *
-	 * @param message the message
-	 * @param cause the cause
-	 * @param enableSuppression the enable suppression
-	 * @param writableStackTrace the writable stack trace
+	 * @param message
+	 *            the message
+	 * @param cause
+	 *            the cause
+	 * @param enableSuppression
+	 *            the enable suppression
+	 * @param writableStackTrace
+	 *            the writable stack trace
 	 */
 	public CompanyDaodbException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * Instantiates a new company daodb exception.
 	 *
-	 * @param message the message
-	 * @param cause the cause
+	 * @param message
+	 *            the message
+	 * @param cause
+	 *            the cause
 	 */
 	public CompanyDaodbException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * Instantiates a new company daodb exception.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
 	public CompanyDaodbException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * Instantiates a new company daodb exception.
 	 *
-	 * @param cause the cause
+	 * @param cause
+	 *            the cause
 	 */
 	public CompanyDaodbException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -21,11 +21,16 @@ public interface CompanyDao {
 	/**
 	 * Creates the company.
 	 *
-	 * @param company the company
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws SQLException the SQL exception
+	 * @param company
+	 *            the company
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws SQLException
+	 *             the SQL exception
 	 */
 	// - Abstract company C.R.U.D methods related actions.
 	public void createCompany(Company company)
@@ -34,10 +39,14 @@ public interface CompanyDao {
 	/**
 	 * Removes the company.
 	 *
-	 * @param company the company
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param company
+	 *            the company
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	public void removeCompany(Company company)
 			throws CompanyDaodbException, ConnectionPoolException, InterruptedException;
@@ -45,10 +54,14 @@ public interface CompanyDao {
 	/**
 	 * Update company.
 	 *
-	 * @param company the company
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @param company
+	 *            the company
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	public void updateCompany(Company company)
 			throws CompanyDaodbException, ConnectionPoolException, InterruptedException;
@@ -56,12 +69,17 @@ public interface CompanyDao {
 	/**
 	 * Gets the company.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the company
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	// - Abstract methods for company related information getters
 	public Company getCompany(long id)
@@ -71,10 +89,14 @@ public interface CompanyDao {
 	 * Gets the all companies.
 	 *
 	 * @return the all companies
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	public Collection<Company> getAllCompanies()
 			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException;
@@ -82,22 +104,32 @@ public interface CompanyDao {
 	/**
 	 * Gets the company id.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
+	 * 
 	 * @return the company id
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	public long getCompanyId(String name) throws CompanyDaodbException, ConnectionPoolException, InterruptedException;
 
 	/**
 	 * Gets the coupons.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
+	 * 
 	 * @return the coupons
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	public Collection<Coupon> getCoupons(long id)
 			throws CompanyDaodbException, ConnectionPoolException, InterruptedException;
@@ -105,13 +137,21 @@ public interface CompanyDao {
 	/**
 	 * Login.
 	 *
-	 * @param name the name
-	 * @param password the password
+	 * @param name
+	 *            the name
+	 * 
+	 * @param password
+	 *            the password
+	 * 
 	 * @return the long
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	// - Abstract login method, for login later use.
 	public Long login(String name, String password)

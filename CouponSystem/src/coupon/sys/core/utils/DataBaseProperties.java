@@ -1,27 +1,26 @@
 package coupon.sys.core.utils;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DataBaseProperties.
+ * The Class DataBaseProperties. This class is used for Global properties.
  */
 public class DataBaseProperties {
 
 	/** The url. */
 	private static String url = "jdbc:derby://localhost:1527/coupon_sys_db";
-	
+
 	/** The driver. */
 	private static String driver = "org.apache.derby.jdbc.ClientDriver";
-	
+
 	/** The user. */
 	private static String user = "admin";
-	
+
 	/** The password. */
 	private static String password = "1234";
-	
+
 	/** The max connections. */
 	private static int maxConnections = 10;
-	
-	/** The thead interval minutes. */
+
+	/** The thread interval minutes. */
 	private static int theadIntervalMinutes = 1440;
 
 	/**

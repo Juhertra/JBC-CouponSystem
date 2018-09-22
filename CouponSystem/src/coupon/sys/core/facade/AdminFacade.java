@@ -14,7 +14,6 @@ import coupon.sys.core.exceptions.ConnectionPoolException;
 import coupon.sys.core.exceptions.CryptoHashException;
 import coupon.sys.core.exceptions.CustomerDaoDbException;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is a part of the facade pattern layer. The class which manages the
  * admin user's request for using methods with admin functionality after a
@@ -29,7 +28,7 @@ public class AdminFacade implements CouponClientFacade {
 
 	/** The customer dao. */
 	private CustomerDao customerDao = new CustomerDaoDb();
-	
+
 	/** The company dao. */
 	private CompanyDao companyDao = new CompanyDaoDb();
 
@@ -43,9 +42,12 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Not implemented, login was implemented at {@code CouponSystem} class.
 	 *
-	 * @param name the name
-	 * @param password the password
-	 * @param clientType the client type
+	 * @param name
+	 *            the name
+	 * @param password
+	 *            the password
+	 * @param clientType
+	 *            the client type
 	 * @return the coupon client facade
 	 */
 	@Override
@@ -59,9 +61,11 @@ public class AdminFacade implements CouponClientFacade {
 	 * class while sending the received company parameter, eventually creating the
 	 * company's record into the data base.
 	 *
-	 * @param company            - the company object that is filled with the fields of the company
+	 * @param company
+	 *            - the company object that is filled with the fields of the company
 	 *            to eventually add to the data base.
-	 * @throws CompanyDaodbException the company daodb exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
 	 */
 	public void createCompany(Company company) throws CompanyDaodbException {
 
@@ -77,9 +81,11 @@ public class AdminFacade implements CouponClientFacade {
 	 * class while sending the received company parameter, eventually removing the
 	 * company's record from the data base.
 	 *
-	 * @param company            - the company object that is filled with the fields of the company
+	 * @param company
+	 *            - the company object that is filled with the fields of the company
 	 *            to eventually add to the data base.
-	 * @throws CompanyDaodbException the company daodb exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
 	 */
 	public void removeCompany(Company company) throws CompanyDaodbException {
 
@@ -95,9 +101,11 @@ public class AdminFacade implements CouponClientFacade {
 	 * class while sending the received company parameter, eventually updating the
 	 * company's record in the data base.
 	 *
-	 * @param company            - the company object that is filled with the fields of the company
+	 * @param company
+	 *            - the company object that is filled with the fields of the company
 	 *            to eventually add to the data base.
-	 * @throws CompanyDaodbException the company daodb exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
 	 */
 	public void updateCompany(Company company) throws CompanyDaodbException {
 
@@ -117,10 +125,14 @@ public class AdminFacade implements CouponClientFacade {
 	 * @return Collection of Company - collection of all the companies in the system
 	 *         in Array list of company objects that we receive from the records of
 	 *         the data base.
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	public Collection<Company> getAllCompanies()
 			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException {
@@ -135,12 +147,17 @@ public class AdminFacade implements CouponClientFacade {
 	 * Helper method to ask DAO for the ID of a given name, then use the ID to get
 	 * from DB.
 	 *
-	 * @param companyName            - Company name to search for it's ID
+	 * @param companyName
+	 *            - Company name to search for it's ID
 	 * @return CompanyID by searching the company name
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	public Company getCompany(String companyName)
 			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException {
@@ -154,12 +171,17 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Helper methods to ask DAO for the company by ID.
 	 *
-	 * @param companyId            - To a search company by its ID
+	 * @param companyId
+	 *            - To a search company by its ID
 	 * @return Company ID
-	 * @throws CompanyDaodbException the company daodb exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CompanyDaodbException
+	 *             the company daodb exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	public Company getCompanyByID(long companyId)
 			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException {
@@ -172,11 +194,15 @@ public class AdminFacade implements CouponClientFacade {
 	 * class while sending the received customer parameter, eventually updating the
 	 * customer's record in the data base.
 	 *
-	 * @param customer            - the customer object that is filled with the fields of the
+	 * @param customer
+	 *            - the customer object that is filled with the fields of the
 	 *            customer to eventually add to the data base.
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	public void updateCustomer(Customer customer)
 			throws CustomerDaoDbException, ConnectionPoolException, InterruptedException {
@@ -193,10 +219,14 @@ public class AdminFacade implements CouponClientFacade {
 	 * @return Collection of Customer - collection of all the customers in the
 	 *         system in Array list of customer objects that we receive from the
 	 *         records of the data base.
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	public Collection<Customer> getAllCustomers()
 			throws CustomerDaoDbException, ConnectionPoolException, InterruptedException, CryptoHashException {
@@ -210,12 +240,17 @@ public class AdminFacade implements CouponClientFacade {
 	 * class while sending the received customer parameter, eventually creating the
 	 * customer's record into the data base.
 	 *
-	 * @param customer            - the customer object that is filled with the fields of the
+	 * @param customer
+	 *            - the customer object that is filled with the fields of the
 	 *            customer to eventually add to the data base.
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws SQLException the SQL exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws SQLException
+	 *             the SQL exception
 	 */
 	public void createCustomer(Customer customer)
 			throws CustomerDaoDbException, ConnectionPoolException, InterruptedException, SQLException {
@@ -228,11 +263,15 @@ public class AdminFacade implements CouponClientFacade {
 	 * class while sending the received customer parameter, eventually removing the
 	 * customer's record from the data base.
 	 *
-	 * @param customer            - the customer object that is filled with the fields of the
+	 * @param customer
+	 *            - the customer object that is filled with the fields of the
 	 *            customer to eventually add to the data base.
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	public void removeCustomer(Customer customer)
 			throws CustomerDaoDbException, ConnectionPoolException, InterruptedException {
@@ -245,15 +284,21 @@ public class AdminFacade implements CouponClientFacade {
 	 * class while sending the received customer's id parameter, eventually getting
 	 * and returning a Customer object from the customer's record in the data base.
 	 *
-	 * @param customerName            - the customer's name of the customer we wish to eventually get
+	 * @param customerName
+	 *            - the customer's name of the customer we wish to eventually get
 	 *            from the data base.
 	 * @return A Customer object, that represents the customer with the given name
 	 *         from the records in the data base.
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws SQLException the SQL exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws SQLException
+	 *             the SQL exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	public Customer getCustomerByName(String customerName) throws CustomerDaoDbException, ConnectionPoolException,
 			InterruptedException, SQLException, CryptoHashException {
@@ -269,14 +314,19 @@ public class AdminFacade implements CouponClientFacade {
 	 * class while sending the received customer's id parameter, eventually getting
 	 * and returning a Customer object from the customer's record in the data base.
 	 *
-	 * @param customerId the customer id
+	 * @param customerId
+	 *            the customer id
 	 * @return {@code CustomerDaoDb.getCustomer(id)} - A Customer object, that
 	 *         represents the customer with the given id from the records in the
 	 *         data base.
-	 * @throws CustomerDaoDbException the customer dao db exception
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CustomerDaoDbException
+	 *             the customer dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CryptoHashException
+	 *             the crypto hash exception
 	 */
 	public Customer getCustomer(long customerId)
 			throws CustomerDaoDbException, ConnectionPoolException, InterruptedException, CryptoHashException {

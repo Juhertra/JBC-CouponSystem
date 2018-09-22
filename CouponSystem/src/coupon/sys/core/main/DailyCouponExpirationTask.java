@@ -9,7 +9,6 @@ import coupon.sys.core.dao.db.CouponDaoDb;
 import coupon.sys.core.exceptions.ConnectionPoolException;
 import coupon.sys.core.exceptions.CouponDaoDbException;
 
-// TODO: Auto-generated Javadoc
 /**
  * TimerTask implements Runnable. this task will be scheduled from the
  * CouponSystem singleton. the interval is defined in the properties file in
@@ -26,9 +25,9 @@ public class DailyCouponExpirationTask extends TimerTask {
 	/**
 	 * Instantiates a new daily coupon expiration task.
 	 *
-	 * @param couponDao the coupon dao
+	 * @param couponDao
+	 *            the coupon dao
 	 */
-	// c'tor invoked with the couponDAO passed in
 	public DailyCouponExpirationTask(CouponDao couponDao) {
 		this.couponDao = couponDao;
 	}
@@ -45,13 +44,16 @@ public class DailyCouponExpirationTask extends TimerTask {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Method to search for old coupons and remove them from DB.
 	 *
-	 * @throws ConnectionPoolException the connection pool exception
-	 * @throws InterruptedException the interrupted exception
-	 * @throws CouponDaoDbException the coupon dao db exception
+	 * @throws ConnectionPoolException
+	 *             the connection pool exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 * @throws CouponDaoDbException
+	 *             the coupon dao db exception
 	 */
 	private void cleanOldCoupons() throws ConnectionPoolException, InterruptedException, CouponDaoDbException {
 		Collection<Coupon> oldCoupons = couponDao.getOldCoupons();
@@ -63,7 +65,7 @@ public class DailyCouponExpirationTask extends TimerTask {
 				try {
 					couponDao.removeCoupon(coupon);
 				} catch (CouponDaoDbException e) {
-						throw new CouponDaoDbException(coupon.getId() + " could not removed.", e);
+					throw new CouponDaoDbException(coupon.getId() + " could not removed.", e);
 				}
 			}
 		}
