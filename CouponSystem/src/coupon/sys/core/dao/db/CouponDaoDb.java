@@ -140,12 +140,12 @@ public class CouponDaoDb implements CouponDao {
 	public void removeCoupon(Coupon coupon) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
 		Connection connection = connectionPool.getConnection();
 		try {
-			String query = "DELETE FROM Customer_Coupon WHERE COUPON_ID=?;"
-					+ "DELETE FROM Company_Coupon WHERE COUPON_ID=?; DELETE FROM Coupon WHERE ID=?";
+			String query = "DELETE FROM Coupon WHERE ID=?"; //"DELETE FROM Customer_Coupon WHERE COUPON_ID=?;"
+				//	+ "DELETE FROM Company_Coupon WHERE COUPON_ID=?"; 
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setLong(1, coupon.getId());
-			pstmt.setLong(2, coupon.getId());
-			pstmt.setLong(3, coupon.getId());
+		//	pstmt.setLong(2, coupon.getId());
+		//	pstmt.setLong(3, coupon.getId());
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {
@@ -208,7 +208,7 @@ public class CouponDaoDb implements CouponDao {
 		Coupon coupon = new Coupon();
 		Connection connection = connectionPool.getConnection();
 		try {
-			String query = "SELECT * FROM Coupon WHERE ID=?";
+			String query = "SELECT ID FROM Coupon WHERE ID=?";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setLong(1, id);
 			ResultSet resultSet = pstmt.executeQuery();

@@ -152,13 +152,14 @@ public class CouponSystemTester {
 		System.out.println("Change Coupon date and price");
 		coupon.setEndDate(Date.valueOf("2021-07-07"));
 		coupon.setPrice(1000);
+		coupon.setId(companyFacade.getCoupon(coupon.getId()).getId());
 
 		System.out.println("Update Coupon from Company facade");
 		companyFacade.updateCoupon(coupon);
 
 		/* GET COUPON */
 
-		System.out.println("Get Coupon: " + companyFacade.getCouponById(17));
+		System.out.println("Get Coupon: " + companyFacade.getCoupon(coupon.getId()));
 
 		/* REMOVE COUPON */
 
@@ -189,13 +190,13 @@ public class CouponSystemTester {
 		
 		System.out.println("##### CUSTOMER FACADE - CUSTOMER METHODS #####");
 
-		CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("John Day", "111",
+		CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("John Day", "1111",
 				ClientType.CUSTOMER);
 
 		/* PURCHASE COUPON */
 
 		System.out.println("Purchuse coupon");
-		customerFacade.purchaseCoupon(companyFacade.getCoupon(107));
+		customerFacade.purchaseCoupon(companyFacade.getCoupon(coupon.getId()));
 
 		/* GET ALL PURCHASED COUPONS */
 

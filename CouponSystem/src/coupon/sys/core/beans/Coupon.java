@@ -77,7 +77,7 @@ public class Coupon implements Serializable {
 	 *            Coupon companyId - each coupon is correlated to a company ID
 	 */
 	public Coupon(long id, String title, Date startDate, Date endDate, int amount, CouponType type, String message,
-			double price, String image, long companyId) {
+			double price, String image) {
 
 		super();
 		this.id = id;
@@ -89,7 +89,6 @@ public class Coupon implements Serializable {
 		this.message = message;
 		this.price = price;
 		this.image = image;
-		this.companyId = companyId;
 	}
 
 	/**
