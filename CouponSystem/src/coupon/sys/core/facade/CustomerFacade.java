@@ -280,24 +280,30 @@ public class CustomerFacade implements CouponClientFacade {
 	public void purchaseCoupon(Coupon coupon)
 			throws CouponDaoDbException, ConnectionPoolException, InterruptedException, CustomerDaoDbException {
 		// getting real-time coupon amount from DB
-		Coupon couponFromDB = couponDao.getCoupon(coupon.getId());
+		Coupon couponFromDB;
+		try {
+			couponFromDB = couponDao.getCoupon(coupon.getId());
 
-		if (couponFromDB == null) {
-			throw new CouponDaoDbException("Not available coupons");
+			if (couponFromDB == null) {
+				throw new CouponDaoDbException("Not available coupons");
+			}
+			if (couponFromDB.getAmount() <= 0) {
+				throw new CouponDaoDbException("coupon amount is 0.");
+			}
+			// and not purchased already
+			if (getAllPurchasedCoupons().contains(couponFromDB)) {
+				throw new CouponDaoDbException("coupon already owned by customer " + getCustomer().getName());
+			}
+
+			customerDao.addCouponToCustomer(couponFromDB, this.customer);
+			System.out.println("coupon purchased by customer " + getCustomer().getName());
+			// decrease amount
+			couponFromDB.setAmount(couponFromDB.getAmount() - 1);
+			couponDao.updateCoupon(couponFromDB);
+			System.out.println(couponFromDB);
+		} catch (Exception e) {
+			throw new CouponDaoDbException("coupon new amount updated in db for Customer: " + getCustomer().getName(), e);
 		}
-		if (couponFromDB.getAmount() <= 0) {
-			throw new CouponDaoDbException("coupon amount is 0.");
-		}
-		// and not purchased already
-		if (getAllPurchasedCoupons().contains(couponFromDB)) {
-			throw new CouponDaoDbException("coupon already owned by customer " + getCustomer().getName());
-		}
-		// purchase
-		customerDao.addCouponToCustomer(couponFromDB, this.customer);
-		System.out.println("coupon purchased by customer " + getCustomer().getName());
-		// decrease amount
-		couponFromDB.setAmount(couponFromDB.getAmount() - 1);
-		couponDao.updateCoupon(couponFromDB);
-		throw new CouponDaoDbException("coupon new amount updated in db " + getCustomer().getName());
+		
 	}
 }

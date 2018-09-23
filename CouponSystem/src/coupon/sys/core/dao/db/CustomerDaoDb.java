@@ -433,7 +433,7 @@ public class CustomerDaoDb implements CustomerDao {
 			pstmt.close();
 			throw new CustomerDaoDbException("coupon purchased by " + customer.getName() + ".");
 		} catch (SQLException e) {
-			throw new CustomerDaoDbException("cannot create customer: ", e);
+			throw new CustomerDaoDbException("Duplicated ID, cannot add customer: ", e);
 		} finally {
 			connectionPool.returnConnection(connection);
 		}

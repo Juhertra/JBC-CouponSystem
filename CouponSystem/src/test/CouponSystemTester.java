@@ -192,7 +192,7 @@ public class CouponSystemTester {
 
 		CustomerFacade customerFacade = (CustomerFacade) CouponSystem.getInstance().login("John Day", "1111",
 				ClientType.CUSTOMER);
-
+		
 		/* PURCHASE COUPON */
 
 		System.out.println("Purchuse coupon");
