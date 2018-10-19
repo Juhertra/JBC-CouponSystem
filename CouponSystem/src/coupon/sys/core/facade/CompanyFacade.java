@@ -96,9 +96,9 @@ public class CompanyFacade implements CouponClientFacade {
 	 *               coupon to eventually add to the data base.
 	 * @throws CouponSystemExceptions
 	 */
-	public void createCoupon(Coupon coupon) throws CouponSystemExceptions {
+	public void createCoupon(Coupon coupon, long loggedInCompanyID) throws CouponSystemExceptions {
 
-		couponDao.createCoupon(coupon);
+		couponDao.createCoupon(coupon, loggedInCompanyID);
 	}
 
 	/**

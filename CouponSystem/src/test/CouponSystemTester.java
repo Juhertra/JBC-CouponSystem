@@ -129,6 +129,9 @@ public class CouponSystemTester {
 
 		CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login("Hush Puppies", "111",
 				ClientType.COMPANY);
+		
+		Company fullCompany = companyFacade.getCompany("Hush Puppies");
+		long loggedInCompanyID = fullCompany.getId();
 
 		/* CREATE COUPON */
 
@@ -144,7 +147,7 @@ public class CouponSystemTester {
 		coupon.setImage("sport star");
 
 		System.out.println("Create Coupon from Company facade");
-		companyFacade.createCoupon(coupon);
+		companyFacade.createCoupon(coupon, loggedInCompanyID);
 		
 
 		/* UPDATE COUPON */

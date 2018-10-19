@@ -55,7 +55,7 @@ public class CouponDaoDb implements CouponDao {
 	 * @throws CouponSystemExceptions
 	 */
 	@Override
-	public void createCoupon(Coupon coupon) throws CouponSystemExceptions {
+	public void createCoupon(Coupon coupon, long loggedInCompanyID) throws CouponSystemExceptions {
 
 		Connection connection = connectionPool.getConnection();
 
@@ -106,7 +106,7 @@ public class CouponDaoDb implements CouponDao {
 				// Add company and coupon ID into Company_Coupon join table
 				query = "INSERT INTO Company_Coupon (COMPANY_ID, COUPON_ID) VALUES(?, ?)";
 				pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-				pstmt.setLong(1, CompanyDaoDb.loggedInCompanyID);
+				pstmt.setLong(1, loggedInCompanyID);
 				pstmt.setLong(2, id);
 				pstmt.executeUpdate();
 				pstmt.close();

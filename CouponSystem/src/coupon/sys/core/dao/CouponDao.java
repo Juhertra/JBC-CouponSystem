@@ -20,10 +20,11 @@ public interface CouponDao {
 	 * Creates the coupon.
 	 *
 	 * @param coupon the coupon
+	 * @param loggedInCompanyID 
 	 * @throws CouponSystemExceptions
 	 */
 	// - Abstract coupon C.R.U.D methods related actions.
-	public void createCoupon(Coupon coupon) throws CouponSystemExceptions;
+	public void createCoupon(Coupon coupon, long loggedInCompanyID) throws CouponSystemExceptions;
 
 	/**
 	 * Removes the coupon.
