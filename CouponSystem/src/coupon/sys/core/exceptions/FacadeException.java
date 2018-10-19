@@ -6,7 +6,7 @@ package coupon.sys.core.exceptions;
  * @author Julio Hernan Trajtemberg
  * @version 1.0 September 18, 2018.
  */
-public class CustomerDaoDbException extends Exception {
+public class FacadeException extends CouponSystemExceptions {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -14,7 +14,7 @@ public class CustomerDaoDbException extends Exception {
 	/**
 	 * Instantiates a new customer dao db exception.
 	 */
-	public CustomerDaoDbException() {
+	public FacadeException() {
 		super();
 	}
 
@@ -30,7 +30,7 @@ public class CustomerDaoDbException extends Exception {
 	 * @param writableStackTrace
 	 *            the writable stack trace
 	 */
-	public CustomerDaoDbException(String message, Throwable cause, boolean enableSuppression,
+	public FacadeException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
@@ -43,7 +43,7 @@ public class CustomerDaoDbException extends Exception {
 	 * @param cause
 	 *            the cause
 	 */
-	public CustomerDaoDbException(String message, Throwable cause) {
+	public FacadeException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
@@ -53,7 +53,7 @@ public class CustomerDaoDbException extends Exception {
 	 * @param message
 	 *            the message
 	 */
-	public CustomerDaoDbException(String message) {
+	public FacadeException(String message) {
 		super(message);
 	}
 
@@ -63,7 +63,7 @@ public class CustomerDaoDbException extends Exception {
 	 * @param cause
 	 *            the cause
 	 */
-	public CustomerDaoDbException(Throwable cause) {
+	public FacadeException(Throwable cause) {
 		super(cause);
 	}
 

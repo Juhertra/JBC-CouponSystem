@@ -6,8 +6,7 @@ import java.util.TimerTask;
 import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.dao.CouponDao;
 import coupon.sys.core.dao.db.CouponDaoDb;
-import coupon.sys.core.exceptions.ConnectionPoolException;
-import coupon.sys.core.exceptions.CouponDaoDbException;
+import coupon.sys.core.exceptions.CouponSystemExceptions;
 
 /**
  * TimerTask implements Runnable. this task will be scheduled from the
@@ -25,8 +24,7 @@ public class DailyCouponExpirationTask extends TimerTask {
 	/**
 	 * Instantiates a new daily coupon expiration task.
 	 *
-	 * @param couponDao
-	 *            the coupon dao
+	 * @param couponDao the coupon dao
 	 */
 	public DailyCouponExpirationTask(CouponDao couponDao) {
 		this.couponDao = couponDao;
@@ -39,7 +37,7 @@ public class DailyCouponExpirationTask extends TimerTask {
 	public void run() {
 		try {
 			cleanOldCoupons();
-		} catch (ConnectionPoolException | InterruptedException | CouponDaoDbException e) {
+		} catch (CouponSystemExceptions e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -48,25 +46,16 @@ public class DailyCouponExpirationTask extends TimerTask {
 	/**
 	 * Method to search for old coupons and remove them from DB.
 	 *
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
+	 * @throws CCouponSystemExceptions
 	 */
-	private void cleanOldCoupons() throws ConnectionPoolException, InterruptedException, CouponDaoDbException {
+	private void cleanOldCoupons() throws CouponSystemExceptions {
 		Collection<Coupon> oldCoupons = couponDao.getOldCoupons();
 		int numOfOldCoupons = oldCoupons.size();
 		if (numOfOldCoupons <= 0) {
 			return;
 		} else {
 			for (Coupon coupon : oldCoupons) {
-				try {
-					couponDao.removeCoupon(coupon);
-				} catch (CouponDaoDbException e) {
-					throw new CouponDaoDbException(coupon.getId() + " could not removed.", e);
-				}
+				couponDao.removeCoupon(coupon);
 			}
 		}
 	}

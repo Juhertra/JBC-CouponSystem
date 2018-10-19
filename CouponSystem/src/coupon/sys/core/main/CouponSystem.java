@@ -11,11 +11,9 @@ import coupon.sys.core.dao.CustomerDao;
 import coupon.sys.core.dao.db.CompanyDaoDb;
 import coupon.sys.core.dao.db.CouponDaoDb;
 import coupon.sys.core.dao.db.CustomerDaoDb;
-import coupon.sys.core.exceptions.CompanyDaodbException;
 import coupon.sys.core.exceptions.ConnectionPoolException;
 import coupon.sys.core.exceptions.CouponSystemExceptions;
 import coupon.sys.core.exceptions.CryptoHashException;
-import coupon.sys.core.exceptions.CustomerDaoDbException;
 import coupon.sys.core.facade.AdminFacade;
 import coupon.sys.core.facade.ClientType;
 import coupon.sys.core.facade.CompanyFacade;
@@ -63,7 +61,7 @@ public class CouponSystem {
 		// get/create the connection pool
 		try {
 			connectionPool = ConnectionPool.getInstance();
-		} catch (ConnectionPoolException e) {
+		} catch (CouponSystemExceptions e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -76,7 +74,7 @@ public class CouponSystem {
 	 * 
 	 * @return couponSystemInstance
 	 */
-	public synchronized static CouponSystem getInstance() {
+	public synchronized static CouponSystem getInstance() throws CouponSystemExceptions {
 		if (couponSystemInstance == null) {
 			// create a CouponSystem only once
 			couponSystemInstance = new CouponSystem();
@@ -87,14 +85,13 @@ public class CouponSystem {
 	/**
 	 * Graceful shutdown.
 	 *
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
+	 * @throws ConnectionPoolException the connection pool exception
 	 */
-	public void shutdown() throws ConnectionPoolException {
+	public void shutdown() throws CouponSystemExceptions {
 		try {
 			connectionPool.closeAllConnections();
 		} catch (ConnectionPoolException e) {
-			throw new ConnectionPoolException("sql error returned from pool", e);
+			throw new CouponSystemExceptions("sql error returned from pool", e);
 		}
 		System.exit(0);
 	}
@@ -125,29 +122,13 @@ public class CouponSystem {
 	/**
 	 * Login. Global authentication method. depends on the ClientType
 	 *
-	 * @param name
-	 *            the name
-	 * @param password
-	 *            the password
-	 * @param clientType
-	 *            the client type
+	 * @param name       the name
+	 * @param password   the password
+	 * @param clientType the client type
 	 * @return the coupon client facade
-	 * @throws CouponSystemExceptions
-	 *             the coupon system exceptions
-	 * @throws CryptoHashException
-	 *             the crypto hash exception
-	 * @throws CustomerDaoDbException
-	 *             the customer dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
+	 * @throws CouponSystemExceptions the coupon system exceptions
 	 */
-	public CouponClientFacade login(String name, String password, ClientType clientType)
-			throws CouponSystemExceptions, CryptoHashException, CustomerDaoDbException, ConnectionPoolException,
-			InterruptedException, CompanyDaodbException {
+	public CouponClientFacade login(String name, String password, ClientType clientType) throws CouponSystemExceptions {
 		// login of Admin
 		if (clientType == ClientType.ADMIN) {
 			if (password.equals(DataBaseProperties.getPassword()) && name.equals(DataBaseProperties.getUser())) {
@@ -162,42 +143,52 @@ public class CouponSystem {
 
 		{
 			// success auth will return the customer ID
-			Long companyId = companyDao.login(name, password);
-			if (companyId != null && companyId != 0) {
-				// construct a customer with those params
-				Company company = new Company();
-				company.setId(companyId);
-				company.setName(name);
-				company.setPassword(password);
-				// create a CustomerFacade, referring to this company
-				CompanyFacade companyFacade = new CompanyFacade();
-				companyFacade.setCompanyDao(companyDao);
-				companyFacade.setCouponDao(couponDao);
-				return companyFacade;
+
+			try {
+				Long companyId;
+				companyId = companyDao.login(name, password);
+				if (companyId != null && companyId != 0) {
+					// construct a customer with those params
+					Company company = new Company();
+					company.setId(companyId);
+					company.setName(name);
+					company.setPassword(password);
+					// create a CustomerFacade, referring to this company
+					CompanyFacade companyFacade = new CompanyFacade();
+					companyFacade.setCompanyDao(companyDao);
+					companyFacade.setCouponDao(couponDao);
+					return companyFacade;
+				}
+			} catch (CryptoHashException e) {
+				throw new CouponSystemExceptions("Wrong Password!", e);
 			}
 		}
 
 		// login of Customer
 		if (clientType == ClientType.CUSTOMER) {
 			// success auth will return the customer ID
-			Long customerId = customerDao.login(name, password);
-			if (customerId != null && customerId != 0) {
-				// construct a customer with those params
-				Customer customer = new Customer();
-				customer.setId(customerId);
-				customer.setName(name);
-				customer.setPassword(password);
-				// create a CustomerFacade
-				CustomerFacade customerFacade = new CustomerFacade();
-				// customerFacade need to ref that specific customer ( 1 per client )
-				customerFacade.setCustomer(customer);
-				// and ref the DAOs ( customer + coupons )
-				customerFacade.setCustomerDao(customerDao);
-				customerFacade.setCouponDao(couponDao);
-				return customerFacade;
+			try {
+
+				Long customerId = customerDao.login(name, password);
+				if (customerId != null && customerId != 0) {
+					// construct a customer with those params
+					Customer customer = new Customer();
+					customer.setId(customerId);
+					customer.setName(name);
+					customer.setPassword(password);
+					// create a CustomerFacade
+					CustomerFacade customerFacade = new CustomerFacade();
+					// customerFacade need to ref that specific customer ( 1 per client )
+					customerFacade.setCustomer(customer);
+					// and ref the DAOs ( customer + coupons )
+					customerFacade.setCustomerDao(customerDao);
+					customerFacade.setCouponDao(couponDao);
+					return customerFacade;
+				}
+			} catch (CryptoHashException e) {
+				throw new CouponSystemExceptions("Wrong Password!", e);
 			}
 		}
 		return null;
 	}
-
 }

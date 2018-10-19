@@ -1,5 +1,6 @@
 package coupon.sys.core.dao.db;
 
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,8 @@ import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.dao.CouponDao;
 import coupon.sys.core.exceptions.ConnectionPoolException;
-import coupon.sys.core.exceptions.CouponDaoDbException;
+import coupon.sys.core.exceptions.CouponSystemExceptions;
+import coupon.sys.core.exceptions.DBDAOException;
 
 /**
  * This class is a part of the DAO layer. The class which communicates between
@@ -39,6 +41,9 @@ public class CouponDaoDb implements CouponDao {
 		} catch (ConnectionPoolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (CouponSystemExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -46,45 +51,38 @@ public class CouponDaoDb implements CouponDao {
 	 * This method creates the coupon's record into the data base, using the
 	 * received coupon parameter.
 	 *
-	 * @param coupon
-	 *            the coupon
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws SQLException
-	 *             the SQL exception
+	 * @param coupon the coupon
+	 * @throws CouponSystemExceptions
 	 */
 	@Override
-	public void createCoupon(Coupon coupon)
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException, SQLException {
+	public void createCoupon(Coupon coupon) throws CouponSystemExceptions {
 
 		Connection connection = connectionPool.getConnection();
-		String verifyCouponQuery = "SELECT * FROM Coupon";
-		PreparedStatement verifyCouponPstmt = connection.prepareStatement(verifyCouponQuery);
-		ResultSet couponResultSet = verifyCouponPstmt.executeQuery();
-		String couponTitle;
-		Boolean couponTitleExists = false;
 
-		while (couponResultSet.next()) {
-			couponTitle = couponResultSet.getString("TITLE");
-			if (couponTitle.equals(coupon.getTitle())) {
-				couponTitleExists = true;
-				System.out.println("Coupon Already Exists");
-				break;
+		Boolean couponTitleExists;
+		try {
+			String verifyCouponQuery = "SELECT * FROM Coupon";
+			PreparedStatement verifyCouponPstmt = connection.prepareStatement(verifyCouponQuery);
+			ResultSet couponResultSet = verifyCouponPstmt.executeQuery();
+			String couponTitle;
+			couponTitleExists = false;
+
+			while (couponResultSet.next()) {
+				couponTitle = couponResultSet.getString("TITLE");
+				if (couponTitle.equals(coupon.getTitle())) {
+					couponTitleExists = true;
+					System.out.println("Coupon Already Exists");
+					break;
+				}
 			}
-		}
 
-		if (couponTitleExists == false) {
+			if (couponTitleExists == false) {
 
-			// Add new coupon into coupon table
-			try {
+				// Add new coupon into coupon table
 				System.out.println("Writing to DB - Creating coupon");
 				String query = "INSERT INTO Coupon (TITLE, START_DATE, END_DATE, AMOUNT, "
 						+ "TYPE, MESSAGE, PRICE, IMAGE) VALUES (?, ? ,? ,? ,? ,? ,?, ?)";
-				PreparedStatement pstmt = connection.prepareStatement(query);
+				PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 				pstmt.setString(1, coupon.getTitle());
 				pstmt.setDate(2, coupon.getStartDate());
 				pstmt.setDate(3, coupon.getEndDate());
@@ -93,7 +91,6 @@ public class CouponDaoDb implements CouponDao {
 				pstmt.setString(6, coupon.getMessage());
 				pstmt.setDouble(7, coupon.getPrice());
 				pstmt.setString(8, coupon.getImage());
-				// pstmt.setLong(9, coupon.getCompanyId());
 				pstmt.executeUpdate();
 
 				// Get coupon ID
@@ -108,48 +105,51 @@ public class CouponDaoDb implements CouponDao {
 
 				// Add company and coupon ID into Company_Coupon join table
 				query = "INSERT INTO Company_Coupon (COMPANY_ID, COUPON_ID) VALUES(?, ?)";
-				pstmt = connection.prepareStatement(query);
-				pstmt.setLong(1, coupon.getCompanyId());
+				pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				pstmt.setLong(1, CompanyDaoDb.loggedInCompanyID);
 				pstmt.setLong(2, id);
 				pstmt.executeUpdate();
 				pstmt.close();
-			} catch (SQLException e) {
-				throw new CouponDaoDbException("Failed to create new coupon", e);
-			} finally {
-				connectionPool.returnConnection(connection);
-				System.out.println("Coupon created succesfully");
 			}
+		} catch (SQLException e) {
+			throw new DBDAOException("Failed to create new coupon", e);
+		} finally {
+			connectionPool.returnConnection(connection);
+			System.out.println("Coupon created succesfully");
 		}
-
 	}
+
 
 	/**
 	 * This method removes the coupon's record from the data base, using the
 	 * received coupon parameter.
 	 *
-	 * @param coupon
-	 *            the coupon
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @param coupon the coupon
+	 * @throws CouponSystemExceptions
 	 */
 	@Override
-	public void removeCoupon(Coupon coupon) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public void removeCoupon(Coupon coupon) throws CouponSystemExceptions {
 		Connection connection = connectionPool.getConnection();
 		try {
-			String query = "DELETE FROM Coupon WHERE ID=?"; //"DELETE FROM Customer_Coupon WHERE COUPON_ID=?;"
-				//	+ "DELETE FROM Company_Coupon WHERE COUPON_ID=?"; 
+			String query = "DELETE FROM Coupon WHERE ID=?";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setLong(1, coupon.getId());
-		//	pstmt.setLong(2, coupon.getId());
-		//	pstmt.setLong(3, coupon.getId());
 			pstmt.executeUpdate();
 			pstmt.close();
+
+			String query2 = "DELETE FROM Customer_Coupon WHERE COUPON_ID=?";
+			PreparedStatement pstmt2 = connection.prepareStatement(query2);
+			pstmt2.setLong(1, coupon.getId());
+			pstmt2.executeUpdate();
+			pstmt2.close();
+
+			String query3 = "DELETE FROM Company_Coupon WHERE COUPON_ID=?";
+			PreparedStatement pstmt3 = connection.prepareStatement(query3);
+			pstmt3.setLong(1, coupon.getId());
+			pstmt3.executeUpdate();
+			pstmt3.close();
 		} catch (SQLException e) {
-			throw new CouponDaoDbException("Failed to remove the requested coupon", e);
+			throw new DBDAOException("Failed to remove the requested coupon", e);
 		} finally {
 			connectionPool.returnConnection(connection);
 		}
@@ -159,17 +159,11 @@ public class CouponDaoDb implements CouponDao {
 	 * This method updates some columns in the coupon's record in the data base,
 	 * using the received company parameter.
 	 *
-	 * @param coupon
-	 *            the coupon
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @param coupon the coupon
+	 * @throws CouponSystemExceptions
 	 */
 	@Override
-	public void updateCoupon(Coupon coupon) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public void updateCoupon(Coupon coupon) throws CouponSystemExceptions {
 		Connection connection = connectionPool.getConnection();
 		try {
 			String query = "UPDATE Coupon SET END_DATE=?, PRICE=?, AMOUNT=?, MESSAGE=?, IMAGE=? WHERE ID=?";
@@ -183,7 +177,7 @@ public class CouponDaoDb implements CouponDao {
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {
-			throw new CouponDaoDbException("Failed to update the requested coupon", e);
+			throw new DBDAOException("Failed to update the requested coupon", e);
 		} finally {
 			connectionPool.returnConnection(connection);
 		}
@@ -193,18 +187,12 @@ public class CouponDaoDb implements CouponDao {
 	 * This method receives the coupon's record from the data base, using the
 	 * received coupon's id parameter.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * @return the coupon
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
 	@Override
-	public Coupon getCoupon(long id) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Coupon getCoupon(long id) throws CouponSystemExceptions {
 		Coupon coupon = new Coupon();
 		Connection connection = connectionPool.getConnection();
 		try {
@@ -225,7 +213,7 @@ public class CouponDaoDb implements CouponDao {
 			}
 			pstmt.close();
 		} catch (SQLException e) {
-			throw new CouponDaoDbException("Failed to get the requested coupon", e);
+			throw new DBDAOException("Failed to get the requested coupon", e);
 		} finally {
 			connectionPool.returnConnection(connection);
 		}
@@ -238,16 +226,10 @@ public class CouponDaoDb implements CouponDao {
 	 * data base.
 	 *
 	 * @return the all coupons
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
 	@Override
-	public Collection<Coupon> getAllCoupons()
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Collection<Coupon> getAllCoupons() throws CouponSystemExceptions {
 		List<Coupon> allCoupons = new ArrayList<Coupon>();
 		Connection connection = connectionPool.getConnection();
 		try {
@@ -271,7 +253,7 @@ public class CouponDaoDb implements CouponDao {
 			}
 			pstmt.close();
 		} catch (SQLException e) {
-			throw new CouponDaoDbException("Failed to get all coupons", e);
+			throw new DBDAOException("Failed to get all coupons", e);
 		} finally {
 			connectionPool.returnConnection(connection);
 		}
@@ -282,19 +264,12 @@ public class CouponDaoDb implements CouponDao {
 	 * This method receives all the records of coupons that are in the wished
 	 * category from all of the coupons from the data base.
 	 *
-	 * @param couponType
-	 *            the coupon type
+	 * @param couponType the coupon type
 	 * @return the coupons by type
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
 	@Override
-	public Collection<Coupon> getCouponsByType(CouponType couponType)
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Collection<Coupon> getCouponsByType(CouponType couponType) throws CouponSystemExceptions {
 		List<Coupon> allCouponsByType = new ArrayList<Coupon>();
 		Connection connection = connectionPool.getConnection();
 		try {
@@ -319,7 +294,7 @@ public class CouponDaoDb implements CouponDao {
 			}
 			pstmt.close();
 		} catch (SQLException e) {
-			throw new CouponDaoDbException("Failed to get coupons by type", e);
+			throw new DBDAOException("Failed to get coupons by type", e);
 		} finally {
 			connectionPool.returnConnection(connection);
 		}
@@ -331,14 +306,9 @@ public class CouponDaoDb implements CouponDao {
 	 * those coupons.
 	 *
 	 * @return the old coupons
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
+	 * @throws CouponSystemExceptions
 	 */
-	public List<Coupon> getOldCoupons() throws ConnectionPoolException, InterruptedException, CouponDaoDbException {
+	public List<Coupon> getOldCoupons() throws CouponSystemExceptions {
 
 		// constructing a List<Coupon> to return
 		List<Coupon> oldCoupons = new ArrayList<Coupon>();
@@ -355,7 +325,7 @@ public class CouponDaoDb implements CouponDao {
 			}
 			pstmt.close();
 		} catch (SQLException e) {
-			throw new CouponDaoDbException("Can't get old coupon", e);
+			throw new DBDAOException("Can't get old coupon", e);
 		} finally {
 			connectionPool.returnConnection(connection);
 		}

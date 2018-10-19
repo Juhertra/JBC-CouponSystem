@@ -3,6 +3,7 @@ package coupon.sys.core.utils;
 /**
  * The Class DataBaseProperties. This class is used for Global properties.
  */
+
 public class DataBaseProperties {
 
 	/** The url. */
@@ -23,58 +24,58 @@ public class DataBaseProperties {
 	/** The thread interval minutes. */
 	private static int theadIntervalMinutes = 1440;
 
-	/**
-	 * Gets the url.
-	 *
-	 * @return the url
-	 */
 	public static String getUrl() {
 		return url;
 	}
 
-	/**
-	 * Gets the driver.
-	 *
-	 * @return the driver
-	 */
+	public static void setUrl(String url) {
+		DataBaseProperties.url = url;
+	}
+
 	public static String getDriver() {
 		return driver;
 	}
 
-	/**
-	 * Gets the user.
-	 *
-	 * @return the user
-	 */
+	public static void setDriver(String driver) {
+		DataBaseProperties.driver = driver;
+	}
+
 	public static String getUser() {
 		return user;
 	}
 
-	/**
-	 * Gets the password.
-	 *
-	 * @return the password
-	 */
+	public static void setUser(String user) {
+		DataBaseProperties.user = user;
+	}
+
 	public static String getPassword() {
 		return password;
 	}
 
-	/**
-	 * Gets the max connections.
-	 *
-	 * @return the max connections
-	 */
+	public static void setPassword(String password) {
+		DataBaseProperties.password = password;
+	}
+
 	public static int getMaxConnections() {
 		return maxConnections;
 	}
 
-	/**
-	 * Gets the thead interval minutes.
-	 *
-	 * @return the thead interval minutes
-	 */
+	public static void setMaxConnections(int maxConnections) {
+		DataBaseProperties.maxConnections = maxConnections;
+	}
+
 	public static int getTheadIntervalMinutes() {
 		return theadIntervalMinutes;
+	}
+
+	public static void setTheadIntervalMinutes(int theadIntervalMinutes) {
+		DataBaseProperties.theadIntervalMinutes = theadIntervalMinutes;
+	}
+
+	@Override
+	public String toString() {
+		return "DataBaseProperties [getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }

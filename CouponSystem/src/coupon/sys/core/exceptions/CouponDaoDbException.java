@@ -6,7 +6,7 @@ package coupon.sys.core.exceptions;
  * @author Julio Hernan Trajtemberg
  * @version 1.0 September 18, 2018.
  */
-public class CouponDaoDbException extends Exception {
+public class CouponDaoDbException extends CouponSystemExceptions {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

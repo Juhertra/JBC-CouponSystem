@@ -6,7 +6,7 @@ package coupon.sys.core.exceptions;
  * @author Julio Hernan Trajtemberg
  * @version 1.0 September 18, 2018.
  */
-public class CompanyDaodbException extends Exception {
+public class DBDAOException extends CouponSystemExceptions {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -14,7 +14,7 @@ public class CompanyDaodbException extends Exception {
 	/**
 	 * Instantiates a new company daodb exception.
 	 */
-	public CompanyDaodbException() {
+	public DBDAOException() {
 		super();
 	}
 
@@ -30,7 +30,7 @@ public class CompanyDaodbException extends Exception {
 	 * @param writableStackTrace
 	 *            the writable stack trace
 	 */
-	public CompanyDaodbException(String message, Throwable cause, boolean enableSuppression,
+	public DBDAOException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
@@ -43,7 +43,7 @@ public class CompanyDaodbException extends Exception {
 	 * @param cause
 	 *            the cause
 	 */
-	public CompanyDaodbException(String message, Throwable cause) {
+	public DBDAOException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
@@ -53,7 +53,7 @@ public class CompanyDaodbException extends Exception {
 	 * @param message
 	 *            the message
 	 */
-	public CompanyDaodbException(String message) {
+	public DBDAOException(String message) {
 		super(message);
 	}
 
@@ -63,7 +63,7 @@ public class CompanyDaodbException extends Exception {
 	 * @param cause
 	 *            the cause
 	 */
-	public CompanyDaodbException(Throwable cause) {
+	public DBDAOException(Throwable cause) {
 		super(cause);
 	}
 

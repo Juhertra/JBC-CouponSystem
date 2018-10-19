@@ -1,9 +1,9 @@
 package coupon.sys.core.facade;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
+
 import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.beans.CouponType;
@@ -11,10 +11,10 @@ import coupon.sys.core.dao.CompanyDao;
 import coupon.sys.core.dao.CouponDao;
 import coupon.sys.core.dao.db.CompanyDaoDb;
 import coupon.sys.core.dao.db.CouponDaoDb;
-import coupon.sys.core.exceptions.CompanyDaodbException;
 import coupon.sys.core.exceptions.ConnectionPoolException;
-import coupon.sys.core.exceptions.CouponDaoDbException;
+import coupon.sys.core.exceptions.CouponSystemExceptions;
 import coupon.sys.core.exceptions.CryptoHashException;
+import coupon.sys.core.exceptions.DBDAOException;
 
 /**
  * This class is a part of the facade pattern layer. The class which manages the
@@ -34,6 +34,9 @@ public class CompanyFacade implements CouponClientFacade {
 	/** The coupon dao. */
 	private CouponDao couponDao = new CouponDaoDb();
 
+	/** The logged in company ID. */
+	protected static long loggedInCompanyID = 0;
+
 	/**
 	 * Simple C'tor when no object needed.
 	 */
@@ -44,32 +47,25 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Gets the company.
 	 *
-	 * @param companyName
-	 *            the company name
+	 * @param companyName the company name
 	 * @return the company
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws CryptoHashException
-	 *             the crypto hash exception
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws CryptoHashException     the crypto hash exception
 	 */
 	// returns the company
-	public Company getCompany(String companyName)
-			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException {
-		long companyId = companyDao.getCompanyId(companyName);
+	public Company getCompany(String companyName) throws CouponSystemExceptions {
+		long loggedInCompanyID = companyDao.getCompanyId(companyName);
 		Company company = new Company();
-		company = companyDao.getCompany(companyId);
+		company = companyDao.getCompany(loggedInCompanyID);
 		return company;
 	}
 
 	/**
 	 * Sets the company dao.
 	 *
-	 * @param companyDao
-	 *            the new company dao
+	 * @param companyDao the new company dao
 	 */
 	public void setCompanyDao(CompanyDao companyDao) {
 		this.companyDao = companyDao;
@@ -78,8 +74,7 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Sets the coupon dao.
 	 *
-	 * @param couponDao
-	 *            the new coupon dao
+	 * @param couponDao the new coupon dao
 	 */
 	public void setCouponDao(CouponDao couponDao) {
 		this.couponDao = couponDao;
@@ -97,20 +92,11 @@ public class CompanyFacade implements CouponClientFacade {
 	 * coupon's record into the data base. The coupon is recorded as the coupon of
 	 * the logged in company.
 	 *
-	 * @param coupon
-	 *            - the coupon object that is filled with the fields of the coupon
-	 *            to eventually add to the data base.
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws SQLException
-	 *             the SQL exception
+	 * @param coupon - the coupon object that is filled with the fields of the
+	 *               coupon to eventually add to the data base.
+	 * @throws CouponSystemExceptions
 	 */
-	public void createCoupon(Coupon coupon)
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException, SQLException {
+	public void createCoupon(Coupon coupon) throws CouponSystemExceptions {
 
 		couponDao.createCoupon(coupon);
 	}
@@ -120,17 +106,11 @@ public class CompanyFacade implements CouponClientFacade {
 	 * class while sending the received coupon parameter, eventually removing the
 	 * coupon's record from the data base.
 	 *
-	 * @param coupon
-	 *            - the coupon object that is filled with the fields of the coupon
-	 *            to eventually remove from the data base.
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @param coupon - the coupon object that is filled with the fields of the
+	 *               coupon to eventually remove from the data base.
+	 * @throws CouponSystemExceptions
 	 */
-	public void removeCoupon(Coupon coupon) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public void removeCoupon(Coupon coupon) throws CouponSystemExceptions {
 
 		couponDao.removeCoupon(coupon);
 	}
@@ -140,17 +120,11 @@ public class CompanyFacade implements CouponClientFacade {
 	 * class while sending the received coupon parameter, eventually updating the
 	 * coupon's record in the data base.
 	 *
-	 * @param coupon
-	 *            - the coupon object that is filled with the fields of the coupon
-	 *            to eventually update in data base.
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @param coupon - the coupon object that is filled with the fields of the
+	 *               coupon to eventually update in data base.
+	 * @throws CouponSystemExceptions
 	 */
-	public void updateCoupon(Coupon coupon) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public void updateCoupon(Coupon coupon) throws CouponSystemExceptions {
 
 		couponDao.updateCoupon(coupon);
 	}
@@ -161,15 +135,9 @@ public class CompanyFacade implements CouponClientFacade {
 	 *
 	 * @return {@code CouponDaoDb.getCoupons()} - returning an Array List of all the
 	 *         Coupon objects of the logged in company from records in the data base
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public Collection<Coupon> getAllCoupons()
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Collection<Coupon> getAllCoupons() throws CouponSystemExceptions {
 
 		Collection<Coupon> allCoupons = couponDao.getAllCoupons();
 		return allCoupons;
@@ -180,20 +148,14 @@ public class CompanyFacade implements CouponClientFacade {
 	 * while sending the received coupon id parameter, eventually getting and
 	 * returning a Coupon object.
 	 *
-	 * @param id
-	 *            - the id of the coupon, like it's on the data base, so that we
-	 *            will receive a coupon object from the record in the data base by
-	 *            it's id.
+	 * @param id - the id of the coupon, like it's on the data base, so that we will
+	 *           receive a coupon object from the record in the data base by it's
+	 *           id.
 	 * @return {@code CouponDaoDb.getCoupon(id)} - returning a Coupon object from
 	 *         the coupon's record in the data base.
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public Coupon getCoupon(long id) throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Coupon getCoupon(long id) throws CouponSystemExceptions {
 
 		return couponDao.getCoupon(id);
 	}
@@ -201,18 +163,11 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Get all coupons by ID and remove if coupon type is not the requested ID.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * @return the coupon by id
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public Collection<Coupon> getCouponById(long id)
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Collection<Coupon> getCouponById(long id) throws CouponSystemExceptions {
 		Collection<Coupon> myCoupon = this.getAllCoupons();
 		for (Iterator<Coupon> iterator = myCoupon.iterator(); iterator.hasNext();) {
 			Coupon coupon = iterator.next();
@@ -226,18 +181,11 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Get all coupons by type and remove if coupon type is not the requested type.
 	 *
-	 * @param couponType
-	 *            the coupon type
+	 * @param couponType the coupon type
 	 * @return the all coupons by type
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public Collection<Coupon> getAllCouponsByType(CouponType couponType)
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Collection<Coupon> getAllCouponsByType(CouponType couponType) throws CouponSystemExceptions {
 		Collection<Coupon> allCoupons = this.getAllCoupons();
 		for (Iterator<Coupon> iterator = allCoupons.iterator(); iterator.hasNext();) {
 			Coupon coupon = iterator.next();
@@ -251,18 +199,11 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Get all coupons by price and remove if price is higher than requested.
 	 *
-	 * @param price
-	 *            the price
+	 * @param price the price
 	 * @return the all coupons by max price
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public Collection<Coupon> getAllCouponsByMaxPrice(double price)
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Collection<Coupon> getAllCouponsByMaxPrice(double price) throws CouponSystemExceptions {
 		Collection<Coupon> allCoupons = this.getAllCoupons();
 		for (Iterator<Coupon> iterator = allCoupons.iterator(); iterator.hasNext();) {
 			Coupon coupon = iterator.next();
@@ -277,18 +218,11 @@ public class CompanyFacade implements CouponClientFacade {
 	 * Get all coupons by date and remove if end date is greater than requested
 	 * 
 	 *
-	 * @param date
-	 *            the date
+	 * @param date the date
 	 * @return the all coupons by max date
-	 * @throws CouponDaoDbException
-	 *             the coupon dao db exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public Collection<Coupon> getAllCouponsByMaxDate(String date)
-			throws CouponDaoDbException, ConnectionPoolException, InterruptedException {
+	public Collection<Coupon> getAllCouponsByMaxDate(String date) throws CouponSystemExceptions {
 		Collection<Coupon> allCoupons = this.getAllCoupons();
 		Date maxDate = Date.valueOf(date);
 		if (maxDate != null) {

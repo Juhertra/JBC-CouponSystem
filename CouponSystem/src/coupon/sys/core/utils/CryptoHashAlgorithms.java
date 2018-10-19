@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.xml.bind.DatatypeConverter;
 
+import coupon.sys.core.exceptions.CouponSystemExceptions;
 import coupon.sys.core.exceptions.CryptoHashException;
 
 /**
@@ -25,9 +26,9 @@ public class CryptoHashAlgorithms {
 	 * 
 	 * @return the string
 	 * 
-	 * @throws CryptoHashException the crypto hash exception
+	 * @throws CouponSystemExceptions
 	 */
-	public String hashPassword(byte[] password, String algorithm) throws CryptoHashException {
+	public String hashPassword(byte[] password, String algorithm) throws CouponSystemExceptions {
 		String hashValue = "";
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance(algorithm);

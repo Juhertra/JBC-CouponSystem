@@ -3,6 +3,7 @@ package coupon.sys.core.beans;
 import java.io.Serializable;
 import java.util.Collection;
 
+import coupon.sys.core.exceptions.CouponSystemExceptions;
 import coupon.sys.core.exceptions.CryptoHashException;
 import coupon.sys.core.utils.CryptoHashAlgorithms;
 
@@ -13,6 +14,7 @@ import coupon.sys.core.utils.CryptoHashAlgorithms;
  * @author Julio Hernan Trajtemberg
  * @version 1.0 September 18, 2018.
  */
+
 public class Customer implements Serializable {
 
 	/** The Constant serialVersionUID. */
@@ -57,66 +59,13 @@ public class Customer implements Serializable {
 	}
 
 	/**
-	 * Gets the id.
-	 *
-	 * @return id - Returns Customer ID
-	 */
-	public long getId() {
-
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id
-	 *            - Set Customer ID
-	 */
-	public void setId(long id) {
-
-		this.id = id;
-	}
-
-	/**
-	 * Gets the name.
-	 *
-	 * @return name - Returns Customer name
-	 */
-	public String getName() {
-
-		return name;
-	}
-
-	/**
-	 * Sets the name.
-	 *
-	 * @param name
-	 *            - Set Customer name received by User
-	 */
-	public void setName(String name) {
-
-		this.name = name;
-	}
-
-	/**
-	 * Gets the password.
-	 *
-	 * @return password - Returns Customer password
-	 */
-	public String getPassword() {
-
-		return password;
-	}
-
-	/**
 	 * Takes the received password and hash it.
 	 *
 	 * @param password
 	 *            Customer password - Set password received by user
-	 * @throws CryptoHashException
-	 *             If hash couldn't be hashed throws exception
+	 * @throws CouponSystemExceptions
 	 */
-	public void setPassword(String password) throws CryptoHashException {
+	public void setPassword(String password) throws CouponSystemExceptions {
 
 		CryptoHashAlgorithms CHA = new CryptoHashAlgorithms();
 		try {
@@ -127,30 +76,44 @@ public class Customer implements Serializable {
 		this.password = password;
 	}
 
-	/**
-	 * Gets the coupons.
-	 *
-	 * @return coupons - Returns Customer coupons
-	 */
-	public Collection<Coupon> getCoupons() {
+	public long getId() {
+		return id;
+	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Collection<Coupon> getCoupons() {
 		return coupons;
 	}
 
-	/**
-	 * Sets the coupons.
-	 *
-	 * @param coupons
-	 *            - Set coupons to Customer
-	 */
 	public void setCoupons(Collection<Coupon> coupons) {
-
 		this.coupons = coupons;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", password=" + password + ", coupons=" + coupons + "]";
+		return "Customer [id=" + id + ", name=" + name + ", password=" + password + ", coupons=" + coupons
+				+ ", getId()=" + getId() + ", getName()=" + getName() + ", getCoupons()=" + getCoupons()
+				+ ", getPassword()=" + getPassword() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
 }

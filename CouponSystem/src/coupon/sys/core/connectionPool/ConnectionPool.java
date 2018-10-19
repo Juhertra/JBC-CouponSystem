@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import coupon.sys.core.exceptions.ConnectionPoolException;
+import coupon.sys.core.exceptions.CouponSystemExceptions;
 import coupon.sys.core.utils.DataBaseProperties;
 
 /**
@@ -47,24 +48,16 @@ public class ConnectionPool {
 	/**
 	 * Instantiates a new connection pool.
 	 *
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
+	 * @throws ConnectionPoolException the connection pool exception
 	 */
-	private ConnectionPool() throws ConnectionPoolException {
-
+	private ConnectionPool() throws CouponSystemExceptions {
 		try {
 			Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
-			throw new ConnectionPoolException("Connections to data base failed", e);
-		}
-
-		for (int i = 1; i <= MAX_CONNECTIONS; i++) {
-			try {
+			for (int i = 1; i <= MAX_CONNECTIONS; i++) {
 				connectionSet.add(DriverManager.getConnection(URL));
-			} catch (SQLException e) {
-				throw new ConnectionPoolException("Failed to create connection: " + i, e);
 			}
-
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new ConnectionPoolException("Failed to create connection: ", e);
 		}
 	}
 
@@ -72,16 +65,11 @@ public class ConnectionPool {
 	 * Get connection instance from pool .
 	 *
 	 * @return connectionPool if available, else
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
+	 * @throws ConnectionPoolException the connection pool exception
 	 */
-	public static ConnectionPool getInstance() throws ConnectionPoolException {
-		try {
-			if (connectionPool == null) {
-				connectionPool = new ConnectionPool();
-			}
-		} catch (Exception e) {
-			throw new ConnectionPoolException("Instance already created", e);
+	public static ConnectionPool getInstance() throws CouponSystemExceptions {
+		if (connectionPool == null) {
+			connectionPool = new ConnectionPool();
 		}
 		return connectionPool;
 
@@ -93,45 +81,36 @@ public class ConnectionPool {
 	 * 
 	 * @return the connection
 	 * 
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * 
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws ConnectionPoolException the connection pool exception
 	 */
-	public synchronized Connection getConnection() throws ConnectionPoolException, InterruptedException {
+
+	public synchronized Connection getConnection() throws CouponSystemExceptions {
 		if (closeConnectionPool == false) {
-			try {
-				while (connectionSet.isEmpty()) {
+			while (connectionSet.isEmpty()) {
+				try {
 					wait();
+				} catch (InterruptedException e) {
+					throw new ConnectionPoolException("Error trying to get a connections from pool ", e);
 				}
-			} catch (InterruptedException e) {
-				throw new ConnectionPoolException("Error trying to get a connections from pool ", e);
 			}
 			Iterator<Connection> connectionIterator = connectionSet.iterator();
 			Connection connection = connectionIterator.next();
 			connectionIterator.remove();
 			return connection;
-		} else {
-			throw new ConnectionPoolException("Can't get connection, program is being closed");
+
 		}
+		return null;
 	}
 
 	/**
 	 * Return connection to pool.
 	 *
-	 * @param connection
-	 *            the connection
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
+	 * @param connection the connection
+	 * @throws ConnectionPoolException the connection pool exception
 	 */
-	public synchronized void returnConnection(Connection connection) throws ConnectionPoolException {
-		try {
-			connectionSet.add(connection);
-			notifyAll();
-		} catch (Exception e) {
-			throw new ConnectionPoolException("Couldn't return connection to pool", e);
-		}
+	public synchronized void returnConnection(Connection connection) throws CouponSystemExceptions {
+		connectionSet.add(connection);
+		notifyAll();
 	}
 
 	/**
@@ -139,8 +118,7 @@ public class ConnectionPool {
 	 * locks it and keep checking until each connections is returned or gives a
 	 * timeout until hard shutdown of connections.
 	 *
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
+	 * @throws ConnectionPoolException the connection pool exception
 	 */
 	public synchronized void closeAllConnections() throws ConnectionPoolException {
 		closeConnectionPool = true;
@@ -151,16 +129,16 @@ public class ConnectionPool {
 			} catch (InterruptedException e) {
 				throw new ConnectionPoolException("connection pool shutdown error", e);
 			}
-		}
-		Iterator<Connection> connectionIterator = connectionSet.iterator();
-		try {
+			Iterator<Connection> connectionIterator = connectionSet.iterator();
 			while (connectionIterator.hasNext()) {
 				Connection connection = connectionIterator.next();
-				connection.close();
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					throw new ConnectionPoolException("Error closing connection", e);
+				}
 				connectionIterator.remove();
 			}
-		} catch (SQLException e) {
-			throw new ConnectionPoolException("Error closing connection", e);
 		}
 	}
 }

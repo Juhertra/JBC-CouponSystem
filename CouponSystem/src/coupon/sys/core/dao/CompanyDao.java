@@ -5,8 +5,9 @@ import java.util.Collection;
 
 import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
-import coupon.sys.core.exceptions.CompanyDaodbException;
+import coupon.sys.core.exceptions.DBDAOException;
 import coupon.sys.core.exceptions.ConnectionPoolException;
+import coupon.sys.core.exceptions.CouponSystemExceptions;
 import coupon.sys.core.exceptions.CryptoHashException;
 
 /**
@@ -21,140 +22,105 @@ public interface CompanyDao {
 	/**
 	 * Creates the company.
 	 *
-	 * @param company
-	 *            the company
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws SQLException
-	 *             the SQL exception
+	 * @param company the company
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws SQLException            the SQL exception
+	 * @throws CouponSystemExceptions
 	 */
 	// - Abstract company C.R.U.D methods related actions.
-	public void createCompany(Company company)
-			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, SQLException;
+	public void createCompany(Company company) throws CouponSystemExceptions;
 
 	/**
 	 * Removes the company.
 	 *
-	 * @param company
-	 *            the company
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @param company the company
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public void removeCompany(Company company)
-			throws CompanyDaodbException, ConnectionPoolException, InterruptedException;
+	public void removeCompany(Company company) throws CouponSystemExceptions;
 
 	/**
 	 * Update company.
 	 *
-	 * @param company
-	 *            the company
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @param company the company
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public void updateCompany(Company company)
-			throws CompanyDaodbException, ConnectionPoolException, InterruptedException;
+	public void updateCompany(Company company) throws CouponSystemExceptions;
 
 	/**
 	 * Gets the company.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * @return the company
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws CryptoHashException
-	 *             the crypto hash exception
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws CryptoHashException     the crypto hash exception
+	 * @throws CouponSystemExceptions
 	 */
 	// - Abstract methods for company related information getters
-	public Company getCompany(long id)
-			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException;
+	public Company getCompany(long id) throws CouponSystemExceptions;
 
 	/**
 	 * Gets the all companies.
 	 *
 	 * @return the all companies
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws CryptoHashException
-	 *             the crypto hash exception
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws CryptoHashException     the crypto hash exception
+	 * @throws CouponSystemExceptions
 	 */
-	public Collection<Company> getAllCompanies()
-			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException;
+	public Collection<Company> getAllCompanies() throws CouponSystemExceptions;
 
 	/**
 	 * Gets the company id.
 	 *
-	 * @param name
-	 *            the name
+	 * @param name the name
 	 * 
 	 * @return the company id
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public long getCompanyId(String name) throws CompanyDaodbException, ConnectionPoolException, InterruptedException;
+	public long getCompanyId(String name) throws CouponSystemExceptions;
 
 	/**
 	 * Gets the coupons.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * 
 	 * @return the coupons
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws CouponSystemExceptions
 	 */
-	public Collection<Coupon> getCoupons(long id)
-			throws CompanyDaodbException, ConnectionPoolException, InterruptedException;
+	public Collection<Coupon> getCoupons(long id) throws CouponSystemExceptions;
 
 	/**
 	 * Login.
 	 *
-	 * @param name
-	 *            the name
+	 * @param name     the name
 	 * 
-	 * @param password
-	 *            the password
+	 * @param password the password
 	 * 
 	 * @return the long
-	 * @throws CompanyDaodbException
-	 *             the company daodb exception
-	 * @throws ConnectionPoolException
-	 *             the connection pool exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
-	 * @throws CryptoHashException
-	 *             the crypto hash exception
+	 * @throws DBDAOException   the company daodb exception
+	 * @throws ConnectionPoolException the connection pool exception
+	 * @throws InterruptedException    the interrupted exception
+	 * @throws CryptoHashException     the crypto hash exception
+	 * @throws CouponSystemExceptions
 	 */
 	// - Abstract login method, for login later use.
-	public Long login(String name, String password)
-			throws CompanyDaodbException, ConnectionPoolException, InterruptedException, CryptoHashException;
+	public Long login(String name, String password) throws CouponSystemExceptions;
 
 }
